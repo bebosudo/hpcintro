@@ -1,0 +1,22 @@
+#include "distance.h"
+#include <unistd.h>
+#include <math.h>
+
+#ifdef ALL_IN_ONE
+
+double 
+distance(particle_t *p, int n) {
+    for(sqrt(
+    return(-1.0);
+}
+
+#else
+
+double 
+distance(particle_t *p, double *v, int n) {
+    // dummy code - please change
+    sleep(1);
+    return(-1.0);
+}
+
+#endif

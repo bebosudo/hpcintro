@@ -1,0 +1,25 @@
+Make and Makefiles - exercise 3
+-------------------------------
+
+Re-use the files from exercise 2 by copying them into this directory.
+
+Remove all the dependency lines, i.e.
+
+main.o: main.c data.h io.h
+data.o: ...
+...
+
+from your Makefile.
+
+- Run the 'makedepend *.c' command.  What happens to your Makefile?  
+- Read the man-pages of 'makedepend' to find a way to get rid of external
+  dependcies, i.e. references to file like /usr/include/stdio.h, etc.
+  Note:  ignore the warnings, if there are related to external files.
+- Re-run makedepend with the new options.  Look at the Makefile.
+- Note:  makedepend is part of the X11 software tools, and thus not
+  always installed on all systems!  An alternative in this case can be
+  the C compiler.  Try to find out, if both cc and gcc can help you,
+  in case makedepend is missing on your system.
+
+Note:  If you are using the compiler to generate dependencies, they
+       are not added automatically to your Makefile

@@ -1,0 +1,9 @@
+Make and Makefiles - exercise 4
+-------------------------------
+
+Use the files in this directory to check, if the version of make you
+are calling supports Fortran 90 source files (suffix .f90).  If it does,
+check with the 'gmake' command.
+
+If 'gmake' fails, extend the suffix list and write a new rule to be able
+to compile the project with gmake.

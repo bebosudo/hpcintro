@@ -1,0 +1,11 @@
+# Data clean-up
+awk '{if (NF > 2) {print $1 " " $3} else {print $1 " " $2}}' wave_labs/wave.dat > wave_labs/wave_clean.dat
+
+# Plotting
+$ gnuplot
+gnuplot> set xlabel 'time/secs'
+gnuplot> set ylabel 'Signal/V'
+gnuplot> set title 'Signal temporal analysis'
+gnuplot> set term postscript eps
+gnuplot> set output 'wave_labs/wave.eps'
+gnuplot> plot 'wave_labs/wave_clean.dat'

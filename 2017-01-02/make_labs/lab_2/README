@@ -1,0 +1,31 @@
+Make and Makefiles - exercise 2
+--------------------------------
+
+a) Use the source files in this directory and craft a Makefile that
+satisfies the following dependency graph:
+
+               + data.o --- +  data.c  
+               |             \ 
+               |              + data.h
+               |             /
+excer2.exe --- + main.o --- + main.c
+               |             \ 
+               |              + io.h
+               |             /
+               +  io.o  --- +
+
+This time, you should make use of the built-in rules, to remove as many
+redundant parts in your Makefile as possible.  You can either start with
+the Makefile from exercise 1, and do the necessary changes, or start
+with a new Makefile from scratch.
+
+In the end, your Makefile should contain at least:
+
+    - an OBJECT macro that lists all the .o files
+    - a CFLAGS macro, that defines the compiler flags '-g -O3'
+    - the CC macro, so you can easily switch compiler
+
+- Run 'make' and verify that the code compiles correctly.  
+- Try to run 'make -r'?  What happens?  Why?
+- Run make with the compiler flags '-g -O2' _without_ changing the
+  Makefile.  How can you achieve that?

@@ -1,0 +1,4 @@
+C --> access by rows (`i' cycle over the rows, `j' cycle over the columns)
+Fortran --> access by column (`i' cycle over the cols, `j' cycle over the rows)
+
+

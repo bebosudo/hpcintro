@@ -1,0 +1,11 @@
+Make and Makefiles - exercise 5
+-------------------------------
+
+The files in this directory need to be corrected to get a working
+program.  What is missing?
+
+Hints:
+
+- correct one of the source files
+- add a macro to the Makefile, that links the executable with the
+  missing option
