@@ -1,1 +1,4 @@
-== Week1: Tuning ==
+# Week1: Tuning
+1. [2017-01-02]: Introduction to Makefile, plotting tools, HPC basis with some exercises.
+2. [2017-01-03]: Tuning C and Fortran programs.
+
