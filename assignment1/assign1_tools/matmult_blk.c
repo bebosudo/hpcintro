@@ -1,6 +1,7 @@
 #include <time.h>
 #include <stdlib.h>
 #include <stdio.h>
+#define MIN(a, b)  (((a) < (b)) ? (a) : (b))
 
 void matmult_blk (int m,int n,int k,double **A,double **B,double **C){
 	for (int i = 0; i < m; i++) {
@@ -23,4 +24,4 @@ void matmult_blk (int m,int n,int k,double **A,double **B,double **C){
 				}
 			}
 		}
-	
+	}
