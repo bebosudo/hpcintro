@@ -2,3 +2,8 @@ C --> access by rows (`i' cycle over the rows, `j' cycle over the columns)
 Fortran --> access by column (`i' cycle over the cols, `j' cycle over the rows)
 
 
+Advices for assignments and other things:
+1) run tests for ~ 3 secs
+2) plot the flop/s, and the L1, L2, L3 sizes.
+3) use a batch script (given by professor) to run an executable on the cluster with reserved resources (in order to avoid having a single cpu reserved on the cluster).
+4) in the assignment there's a file matmult_X.compiler: if we access the matrix with [i][j] notation use the C version in place of the X, if we use [i+..j] use the F in place of the X. Use .studio if we use the Sun Studio compiler, otherwise the .gcc in case of the GCC comp.
