@@ -1,0 +1,22 @@
+CC=gcc
+SRCS=matmult_lib.c
+EXECUTABLE=matmult_lib
+INCLUDES=
+CFLAGS=-c -Wall
+LFLAGS=-L/usr/lib64/atlas
+LIBS=-lcblas
+OBJS=$(SRCS:.c=.o)
+
+all: $(SRCS) $(EXECUTABLE)
+
+$(EXECUTABLE): $(OBJS)
+	$(CC) $(OBJS) $(LFLAGS) $(LIBS) -o $@
+
+%.o: %.c
+	$(CC) -c $(CFLAGS) $(INCLUDES) $< -o $@
+
+clean:
+	rm *.o $(EXECUTABLE)
+
+run: $(EXECUTABLE)
+	./$<
