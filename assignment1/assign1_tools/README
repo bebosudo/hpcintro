@@ -84,7 +84,7 @@ matmult_... type m n k [bs]
 where m, n, k are the parameters defining the matrix sizes, bs is the
 optional blocksize for the block version, and type can be one of:
 
-nat	- the native/naïve version
+nat	- the native/naï¿½ve version
 lib	- the library version (see above, which library will be called)
 blk	- the blocked version (takes bs as extra argument)
 
