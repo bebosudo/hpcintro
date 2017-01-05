@@ -6,7 +6,11 @@ LIBOBJS	= matmult_lib.o matmult_nat.o \
           matmult_nkm.o matmult_nmk.o \
           matmult_blk.o
 
+<<<<<<< HEAD
+OPT	= -g -fast -unroll=1
+=======
 OPT	= -g -fast -xrestrict=%all -xprefetch_level=3
+>>>>>>> db44336ee7046ffdf9e837965d986af334eb8539
 PIC	= -fPIC
 
 CC	= suncc
