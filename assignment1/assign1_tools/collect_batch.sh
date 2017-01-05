@@ -27,11 +27,11 @@ MKN="1000 5000 7500"
 
 # define the permutation type in PERM
 #
-PERM="lib"
+PERM="blk"
 
 # uncomment and set a reasonable BLKSIZE for the blk version
 #
-# BLKSIZE=1
+BLKSIZE=10
 
 # define the max no. of iterations the driver should use - adjust to
 # get a reasonable run time.  You can get an estimate by trying this
@@ -43,7 +43,7 @@ MFLOPS_MAX_IT=1
 # experiment name 
 #
 JID=`echo ${PBS_JOBID%.*}`
-EXPOUT="$PBS_JOBNAME.${JID}.er"
+EXPOUT="$PBS_JOBNAME.${PERM}.${JID}.er"
 
 # uncomment the HWCOUNT line, if you want to use hardware counters
 # define an option string for the harwdware counters (see output of

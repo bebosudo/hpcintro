@@ -3,7 +3,8 @@ LIBSRCS	=
 LIBOBJS	= matmult_lib.o matmult_nat.o \
           matmult_kmn.o matmult_knm.o \
           matmult_mkn.o matmult_mnk.o \
-          matmult_nkm.o matmult_nmk.o
+          matmult_nkm.o matmult_nmk.o \
+          matmult_blk.o
 
 OPT	= -g -O3 -std=gnu99
 PIC	= -fPIC
