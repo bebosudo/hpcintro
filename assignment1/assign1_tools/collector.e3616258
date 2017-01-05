@@ -1,3 +1,0 @@
-Loaded module: studio/12u4
-/var/spool/torque/mom_priv/jobs/3616258.hnode2.SC: line 66: syntax error near unexpected token `"${size} ${PERM} "'
-/var/spool/torque/mom_priv/jobs/3616258.hnode2.SC: line 66: `      printf("${size} ${PERM} ") >> $OUTFILE'
