@@ -34,6 +34,23 @@ def formatter(filein, fileout):
                     fo.write(line)
 
 
+def splitter(filein):
+    # Divide the whole file in different files, in order to plot them later.
+
+    with open(filein, "r") as fi:
+        for line in fi:
+            s = line.strip().split()
+            # Grab the type of data from the second column of the input file.
+            comb = s[1]
+
+            # Make sure that the folder plot/ exists!
+            fileout = "plot/"+filein+"."+comb+".txt"
+            # Open the output file to append at its end.
+            with open(fileout, "a") as fo:
+                # fo.write(s[0]+" " + " ".join(s[2:]) + "\n")
+                fo.write(" ".join(s[2:4]) + "\n")
+
+
 if __name__ == "__main__":
     import sys
     try:
@@ -42,5 +59,8 @@ if __name__ == "__main__":
         print "Insert the file to clean as the first parameter after this script."
         raise SystemExit
 
-    fileout = filein + ".clean"
-    formatter(filein, fileout)
+    intermediate_file = filein + ".clean"
+    formatter(filein, intermediate_file)
+
+    if len(sys.argv) == 3 and sys.argv[2] == "perm":
+        splitter(intermediate_file)
