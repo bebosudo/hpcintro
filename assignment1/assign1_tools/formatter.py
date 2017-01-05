@@ -62,5 +62,5 @@ if __name__ == "__main__":
     intermediate_file = filein + ".clean"
     formatter(filein, intermediate_file)
 
-    if len(sys.argv) == 3 and sys.argv[2] == "perm":
-        splitter(intermediate_file)
+    # if len(sys.argv) == 3 and sys.argv[2] == "perm":
+    splitter(intermediate_file)
