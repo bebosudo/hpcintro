@@ -10,7 +10,7 @@
 #PBS -q hpcintro
 #PBS -l nodes=1:ppn=1
 #PBS -l walltime=1:00:00
-OUTFILE=matmult_out.txt
+OUTFILE=matmult_out.${PBS_JOBID}.txt
 #PBS -o $OUTFILE
 
 cd $PBS_O_WORKDIR
@@ -64,8 +64,7 @@ do
 
 # start the collect command with the above settings
       printf "${size} ${PERM} " >> $OUTFILE
-      #collect -o $EXPOUT $HWCOUNT ./$EXECUTABLE $PERM $MKN $BLKSIZE
-      /usr/bin/time -f'%E' MATMULT_COMPARE=0 ./$EXECUTABLE $PERM $MKN $BLKSIZE >> $OUTFILE
+      MATMULT_COMPARE=0 /usr/bin/time -f'%E' ./$EXECUTABLE $PERM $MKN $BLKSIZE >> $OUTFILE 2>&1
 
       done
 done
