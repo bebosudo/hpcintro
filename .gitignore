@@ -3,3 +3,6 @@
 
 .idea/*
 .idea/
+
+# hide analyzer files from git(hub)
+results_not_to_upload/
