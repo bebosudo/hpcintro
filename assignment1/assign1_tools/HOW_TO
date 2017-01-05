@@ -1,0 +1,12 @@
+HOW TO obtain and plot the data
+
+*) move to the hpc cluster
+*) build with Make(file) ...
+*) submit the job with collect_batch_perm.sh or a similar uploader
+*) the results should be in a file named matmult_out.${JOB_ID}.txt
+*) [NEEDED ONLY ONCE] create a folder named plot/ with:
+      mkdir plot/
+*) run the python formatter on them with:
+      ./formatter.py matmult_out.${JOB_ID}.txt
+   this splits the file in several txt's, one for each type (mnk, knm, blk, ..), taking it from the second column in the original file.
+*) use the MATLAB script Miguel created to plot the different graphs from the plot/ folder.
