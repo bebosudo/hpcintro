@@ -8,15 +8,12 @@ void matmult_blk (int m,int n,int k,double **A,double **B,double **C, int bs){
     		C[i][j] = 0;
     	}
   }
-	int nbi = bs;
-	int nbj = bs;
-	int nbk = bs;
-	for (int i1 = 0; i1 < m; i1+=nbi){
-		for (int j1 = 0; j1 < n; j1+=nbj){
-			for (int h1 = 0; h1 < k; h1+=nbk){
-				for (int i2 = 0; i2<MIN(m-i1,nbi); i2++){
-					for (int j2 = 0; j2<MIN(n-j1,nbj); j2++){
-						for (int h2 = 0; h2<MIN(k-h1,nbk); h2++)
+	for (int i1 = 0; i1 < m; i1+=bs){
+		for (int j1 = 0; j1 < n; j1+=bs){
+			for (int h1 = 0; h1 < k; h1+=bs){
+				for (int i2 = 0; i2<MIN(m-i1,bs); i2++){
+					for (int j2 = 0; j2<MIN(n-j1,bs); j2++){
+						for (int h2 = 0; h2<MIN(k-h1,bs); h2++)
 							C[i1+i2][j1+j2] += A[i1+i2][h1+h2]*B[h1+h2][j1+j2];
 					}
 				}
