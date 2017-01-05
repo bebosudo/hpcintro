@@ -1,5 +1,5 @@
 TARGET	= libmatmult.so
-LIBSRCS	= 
+LIBSRCS	=
 LIBOBJS	= matmult_lib.o matmult_nat.o \
           matmult_kmn.o matmult_knm.o \
           matmult_mkn.o matmult_mnk.o \
@@ -12,7 +12,7 @@ PIC	= -fPIC
 CC	= gcc
 CFLAGS	= $(OPT) $(PIC) $(XOPTS)
 
-SOFLAGS = -shared 
+SOFLAGS = -shared
 XLIBS	= -L/usr/lib64/atlas -lcblas
 
 
@@ -20,5 +20,4 @@ $(TARGET): $(LIBOBJS)
 	$(CC) -o $@ $(SOFLAGS) $(LIBOBJS) $(XLIBS)
 
 clean:
-	@/bin/rm -f core core.* $(LIBOBJS) 
-
+	@/bin/rm -f core core.* $(LIBOBJS) $(TARGET)
