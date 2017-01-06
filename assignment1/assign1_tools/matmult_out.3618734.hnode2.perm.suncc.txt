@@ -1,0 +1,43 @@
+10 kmn      2.344   1817.137 # matmult_kmn
+0:05.51
+10 mkn      2.344   1973.855 # matmult_mkn
+0:05.07
+10 nkm      2.344   1413.243 # matmult_nkm
+0:07.08
+10 knm      2.344   1464.995 # matmult_knm
+0:06.83
+10 mnk      2.344   1724.400 # matmult_mnk
+0:05.81
+10 nmk      2.344   1605.380 # matmult_nmk
+0:06.24
+50 kmn     58.594   2735.645 # matmult_kmn
+0:02.75
+50 mkn     58.594   2767.948 # matmult_mkn
+0:02.72
+50 nkm     58.594   1833.123 # matmult_nkm
+0:04.10
+50 knm     58.594   1852.134 # matmult_knm
+0:04.06
+50 mnk     58.594   1493.953 # matmult_mnk
+0:05.03
+50 nmk     58.594   1489.799 # matmult_nmk
+0:05.04
+100 kmn    234.375   2803.510 # matmult_kmn
+0:02.88
+100 mkn    234.375   2820.309 # matmult_mkn
+0:02.84
+100 nkm    234.375   1734.493 # matmult_nkm
+0:04.62
+100 knm    234.375   1767.053 # matmult_knm
+0:04.54
+100 mnk    234.375   1366.795 # matmult_mnk
+0:05.86
+100 nmk    234.375   1349.961 # matmult_nmk
+0:05.93
+500 kmn   5859.375   2644.505 # matmult_kmn
+0:01.90
+500 mkn   5859.375   2756.759 # matmult_mkn
+0:01.82
+500 nkm   5859.375    637.608 # matmult_nkm
+0:07.85
+500 knm 

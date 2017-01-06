@@ -10,7 +10,7 @@
 #PBS -q hpcintro
 #PBS -l nodes=1:ppn=1
 #PBS -l walltime=1:00:00
-OUTFILE=matmult_out.${PBS_JOBID}.txt
+OUTFILE=matmult_out.${PBS_JOBID}.perm.suncc.txt
 #PBS -o $OUTFILE
 
 cd $PBS_O_WORKDIR
@@ -21,7 +21,7 @@ module load studio
 # valid values: matmult_c.studio, matmult_f.studio, matmult_c.gcc or
 # matmult_f.gcc
 #
-EXECUTABLE=matmult_c.gcc
+EXECUTABLE=matmult_c.studio
 
 declare -A size_its
 
