@@ -10,7 +10,7 @@
 #PBS -q hpcintro
 #PBS -l nodes=1:ppn=1
 #PBS -l walltime=1:00:00
-OUTFILE=matmult_out.variable_blk.${PBS_JOBID}.txt
+OUTFILE=matmult_out.nofetch.${PBS_JOBID}.txt
 #PBS -o $OUTFILE
 
 cd $PBS_O_WORKDIR
@@ -41,9 +41,7 @@ do
 
       # uncomment and set a reasonable BLKSIZE for the blk version
       #
-      for bs in 5 10 50 100 150
-      do
-        BLKSIZE=${bs}
+      #  BLKSIZE=${bs}
 
       # define the max no. of iterations the driver should use - adjust to
       # get a reasonable run time.  You can get an estimate by trying this
