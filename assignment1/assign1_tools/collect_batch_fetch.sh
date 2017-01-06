@@ -10,7 +10,7 @@
 #PBS -q hpcintro
 #PBS -l nodes=1:ppn=1
 #PBS -l walltime=1:00:00
-OUTFILE=matmult_out.fetchlevel1.${PBS_JOBID}.txt
+OUTFILE=matmult_out.nofetch.${PBS_JOBID}.txt
 #PBS -o $OUTFILE
 
 cd $PBS_O_WORKDIR
