@@ -11,3 +11,6 @@ y = [0 3000];
 semilogx(B(:,1),B(:,2),x,y,'--');
  
 legend('mkn','mkn-prefetch','location','southeast')
+
+title('Prefetch / No Prefetch')
+print('Prefetch/NoP','-dpng')
