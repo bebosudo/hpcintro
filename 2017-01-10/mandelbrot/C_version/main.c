@@ -34,9 +34,9 @@ main(int argc, char *argv[]) {
     }
 
     te = omp_get_wtime() - ts;
-    printf("Elapsed time: %lf\n", te);
+    printf("%lf\n", te);
 
-    writepng("mandelbrot.png", image, width, height);
+//    writepng("mandelbrot.png", image, width, height);
 
     return(0);
 }
