@@ -11,6 +11,7 @@ jacobi(double * unew, double * uold, double * f, double lambda, int N, int kmax,
         unew[i*M+j] = ( 0.25*(uold[(i-1)*M+j]+uold[(i+1)*M+j]+
                       uold[i*M+j-1]+uold[i*M+j+1]+lambda*lambda*f[i*M+j]) );
         d += (unew[i*M+j]-uold[i*M+j])*(unew[i*M+j]-uold[i*M+j]);
+        uold[i*M+j] = unew[i*M+j];
       }
     }
   }
