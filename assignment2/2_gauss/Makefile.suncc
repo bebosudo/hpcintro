@@ -1,14 +1,14 @@
-TARGET	= 1_jacobi
+TARGET	= 2_gauss
 LIBSRCS	=
-LIBOBJS	= main.o jacobi.o
+LIBOBJS	= main.o gauss.o
 
-OPT	= -g
+OPT	= -g -fast
 PIC	=
 
 CC	= suncc
 CFLAGS= $(OPT) $(PIC) $(XOPTS)
 
-XLIBS	=
+XLIBS	= -lm
 
 $(TARGET): $(LIBOBJS)
 	$(CC) -o $@ $(CFLAGS) $(LIBOBJS) $(XLIBS)
