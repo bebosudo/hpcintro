@@ -11,12 +11,9 @@ mandel(int disp_width, int disp_height, int *array, int max_iter) {
     scale_real = 3.5 / (double)disp_width;
     scale_imag = 3.5 / (double)disp_height;
 
-    // Timing.
-    double ts, te;
-    ts = omp_get_wtime();
 
 
-    #pragma omp parallel for schedule(dynamic)
+    #pragma omp for schedule(dynamic)
     for(i = 0; i < disp_width; i++) {
 
         x = ((double)i * scale_real) - 2.25;
@@ -46,6 +43,4 @@ mandel(int disp_width, int disp_height, int *array, int max_iter) {
         }
     }
 
-    te = omp_get_wtime() - ts;
-    printf("Elapsed time: %lf\n", te);
 }
