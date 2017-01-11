@@ -5,7 +5,7 @@ jacobi(double * unew, double * uold, double * f, double lambda, int N, int kmax,
 
 int main(int argc, char * argv[]){
   if (argc != 4){
-    printf("Wrong number of arguments");
+    printf("Wrong number of argument (N kmax treshold)");
     return -1;
   }
   int N = atoi(argv[1]);
