@@ -1,13 +1,17 @@
 #include <stdlib.h>
 #include <stdio.h>
-
 void
-jacobi(double * unew, double * uold, double * f, double lambda, unsigned int N, unsigned int kmax, double treshold);
+jacobi(double * unew, double * uold, double * f, double lambda, int N, int kmax, double treshold);
 
 int main(int argc, char * argv[]){
-  int N = 10;
-
-
+  if (argc != 4){
+    printf("Wrong number of arguments");
+    return -1;
+  }
+  int N = atoi(argv[1]);
+  int kmax = atoi(argv[2]);
+  double lambda = (double)N/2;
+  double treshold = atof(argv[3]);
   double * unew =(double *)calloc((N+2)*(N+2),sizeof(double));
   if (unew == NULL){
     printf("Memory allocation failed");
@@ -23,13 +27,19 @@ int main(int argc, char * argv[]){
     printf("Memory allocation failed");
     return -1;
   }
-  for(int j = 0; j < N+1; j++){
-    uold[(j*(N+1)] = 20;
-    uold[(N+1)+j*(N+1)] = 20;
-    uold[j] = 20;
-    unew[(j*(N+1)] = 20;
-    unew[(N+1)+j*(N+1)] = 20;
-    unew[j] = 20;
-    f[]
+  for(int i = 0; i < N+1; i++){
+    uold[i*(N+1)] = 20;
+    uold[(N+1)+i*(N+1)] = 20;
+    uold[i] = 20;
+    unew[i*(N+1)] = 20;
+    unew[(N+1)+i*(N+1)] = 20;
+    unew[i] = 20;
+  for (int i = N/2; i < 2*N/3+1; i++){
+    for (int j = N/6; j < N/3+1; j++){
+      f[i*(N+2)+j] = 200;
+    }
   }
+  }
+  jacobi(unew,uold,f,lambda,N,kmax,treshold);
+  return 0;
 }

@@ -1,5 +1,5 @@
 void
-jacobi(double * unew, double * uold, double * f, double lambda, unsigned int N, unsigned int kmax, double treshold){
+jacobi(double * unew, double * uold, double * f, double lambda, int N, int kmax, double treshold){
   double d = treshold;
   for (int k = 0; (k > kmax || d < treshold); k++){
     for (int i = 1; i < N+1; i++){
