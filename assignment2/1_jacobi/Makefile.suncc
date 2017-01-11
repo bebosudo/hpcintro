@@ -1,0 +1,17 @@
+TARGET	= 1_jacobi
+LIBSRCS	=
+LIBOBJS	= jacobi.c
+
+OPT	= -g 
+PIC	=
+
+CC	= suncc
+CFLAGS= $(OPT) $(PIC) $(XOPTS)
+
+XLIBS	=
+
+$(TARGET): $(LIBOBJS)
+	$(CC) -o $@ $(CFLAGS) $(LIBOBJS) $(XLIBS)
+
+clean:
+	@/bin/rm -f core core.* $(LIBOBJS)
