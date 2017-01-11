@@ -44,14 +44,14 @@ int main(int argc, char * argv[]){
   for (int i = 0; i < N+2; i++){
     printf("\n");
     for (int j = 0; j < N+2; j++){
-      printf("%.2lf ",unew[i*(N+2)+j]);
+      printf("%2.2lf ",unew[i*(N+2)+j]);
     }
   }
   printf("\n");
   for (int i = 0; i < N+2; i++){
     printf("\n");
     for (int j = 0; j < N+2; j++){
-      printf("%.2lf ",f[i*(N+2)+j]);
+      printf("%2.2lf ",f[i*(N+2)+j]);
     }
   }
   return 0;
