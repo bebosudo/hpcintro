@@ -1,6 +1,6 @@
 TARGET	= 1_jacobi
 LIBSRCS	=
-LIBOBJS	= jacobi.c
+LIBOBJS	= main.o jacobi.o
 
 OPT	= -g 
 PIC	=
