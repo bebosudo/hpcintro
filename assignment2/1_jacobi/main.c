@@ -34,8 +34,8 @@ int main(int argc, char * argv[]){
     unew[i*(N+2)] = 20;
     unew[(N+1)+i*(N+2)] = 20;
     unew[i] = 20;
-  for (int i = N/2; i < 2*N/3+1; i++){
-    for (int j = 2*N/3; j < 5*N/6+1; j++){
+  for (int i = 2*N/3; i < 5*N/6+1; i++){
+    for (int j = N/2; j < 2*N/3+1; j++){
       f[i*(N+2)+j] = 200;
     }
   }
@@ -45,6 +45,12 @@ int main(int argc, char * argv[]){
     printf("\n");
     for (int j = 0; j < N+2; j++){
       printf("%.2lf ",unew[i*(N+2)+j]);
+    }
+  }
+  for (int i = 0; i < N+2; i++){
+    printf("\n");
+    for (int j = 0; j < N+2; j++){
+      printf("%.2lf ",f[i*(N+2)+j]);
     }
   }
   return 0;
