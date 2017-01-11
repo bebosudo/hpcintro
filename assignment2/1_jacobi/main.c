@@ -47,6 +47,7 @@ int main(int argc, char * argv[]){
       printf("%.2lf ",unew[i*(N+2)+j]);
     }
   }
+  printf("\n");
   for (int i = 0; i < N+2; i++){
     printf("\n");
     for (int j = 0; j < N+2; j++){
