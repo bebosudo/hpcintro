@@ -10,7 +10,7 @@ int main(int argc, char * argv[]){
   }
   int N = atoi(argv[1]);
   int kmax = atoi(argv[2]);
-  double lambda = (double)N/2;
+  double lambda = (double)2/(N+2);
   double treshold = atof(argv[3]);
   double * unew =(double *)calloc((N+2)*(N+2),sizeof(double));
   if (unew == NULL){
