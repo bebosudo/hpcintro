@@ -1,0 +1,20 @@
+CC	= suncc
+OPT     = -g -fast #-xautopar -xloopinfo -xreduction
+CFLAGS = $(OPT) $(PIC) $(XOPTS)
+#PIC	= -fPIC
+
+TARGET1	= integr
+TARGET2	= mtimesv
+LIBSRCS	=
+LIBOBJS	= $(TARGET1).o $(TARGET2).o
+
+
+
+all: $(TARGET1) $(TARGET2)
+
+
+$(TARGET1): $(LIBOBJS)
+	$(CC) -o $@ $(CFLAGS) $(LIBOBJS) #$(XLIBS)
+
+clean:
+	@/bin/rm -f core core.* $(LIBOBJS)

@@ -1,7 +1,7 @@
 TARGET	= mandelbrot
 OBJS	= main.o mandel.o writepng.o 
 
-OPT	= -g -fast
+OPT	= -g -fast -xopenmp
 ISA	= 
 PARA	= 
 

@@ -1,0 +1,42 @@
+n-62-27-19(s162501) $ cd Courses/hpcintro/2017-01-10/mandelbrot/C_version/
+~/Courses/hpcintro/2017-01-10/mandelbrot/C_version
+n-62-27-19(s162501) $ OMP_NUM_THREADS=8 time ./mandelbrot
+4.03user 0.16system 0:03.07elapsed 136%CPU (0avgtext+0avgdata 274576maxresident)k
+496inputs+2064outputs (1major+11364minor)pagefaults 0swaps
+~/Courses/hpcintro/2017-01-10/mandelbrot/C_version
+n-62-27-19(s162501) $ OMP_NUM_THREADS=4 time ./mandelbrot
+4.03user 0.07system 0:03.24elapsed 126%CPU (0avgtext+0avgdata 274368maxresident)k
+0inputs+2064outputs (0major+11346minor)pagefaults 0swaps
+~/Courses/hpcintro/2017-01-10/mandelbrot/C_version
+n-62-27-19(s162501) $ OMP_NUM_THREADS=4 time ./mandelbrot
+4.00user 0.06system 0:03.20elapsed 127%CPU (0avgtext+0avgdata 274368maxresident)k
+0inputs+2064outputs (0major+11330minor)pagefaults 0swaps
+~/Courses/hpcintro/2017-01-10/mandelbrot/C_version
+n-62-27-19(s162501) $ OMP_NUM_THREADS=16 time ./mandelbrot
+5.10user 0.39system 0:02.73elapsed 201%CPU (0avgtext+0avgdata 291328maxresident)k
+0inputs+2064outputs (0major+14862minor)pagefaults 0swaps
+~/Courses/hpcintro/2017-01-10/mandelbrot/C_version
+n-62-27-19(s162501) $ OMP_NUM_THREADS=32 time ./mandelbrot
+17.93user 0.96system 0:04.13elapsed 457%CPU (0avgtext+0avgdata 275872maxresident)k
+0inputs+2064outputs (0major+12559minor)pagefaults 0swaps
+~/Courses/hpcintro/2017-01-10/mandelbrot/C_version
+n-62-27-19(s162501) $ OMP_NUM_THREADS=20 time ./mandelbrot
+5.72user 0.57system 0:03.03elapsed 207%CPU (0avgtext+0avgdata 275216maxresident)k
+0inputs+2064outputs (0major+12979minor)pagefaults 0swaps
+~/Courses/hpcintro/2017-01-10/mandelbrot/C_version
+n-62-27-19(s162501) $ OMP_NUM_THREADS=12 time ./mandelbrot
+4.26user 0.21system 0:02.96elapsed 151%CPU (0avgtext+0avgdata 274784maxresident)k
+0inputs+2064outputs (0major+11852minor)pagefaults 0swaps
+~/Courses/hpcintro/2017-01-10/mandelbrot/C_version
+n-62-27-19(s162501) $ OMP_NUM_THREADS=16 time ./mandelbrot
+4.09user 0.36system 0:02.29elapsed 194%CPU (0avgtext+0avgdata 274992maxresident)k
+0inputs+2064outputs (0major+12423minor)pagefaults 0swaps
+~/Courses/hpcintro/2017-01-10/mandelbrot/C_version
+n-62-27-19(s162501) $ OMP_NUM_THREADS=16 time ./mandelbrot
+4.07user 0.37system 0:02.16elapsed 206%CPU (0avgtext+0avgdata 274976maxresident)k
+0inputs+2064outputs (0major+12563minor)pagefaults 0swaps
+~/Courses/hpcintro/2017-01-10/mandelbrot/C_version
+n-62-27-19(s162501) $ OMP_NUM_THREADS=16 time ./mandelbrot
+3.94user 0.39system 0:02.33elapsed 186%CPU (0avgtext+0avgdata 274992maxresident)k
+0inputs+2064outputs (0major+12056minor)pagefaults 0swaps
+~/Courses/hpcintro/2017-01-10/mandelbrot/C_version
