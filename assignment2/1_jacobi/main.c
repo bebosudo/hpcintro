@@ -41,18 +41,17 @@ int main(int argc, char * argv[]){
   }
   }
   jacobi(unew,uold,f,lambda,N,kmax,treshold);
-  for (int i = 0; i < N+2; i++){
-    printf("\n");
-    for (int j = 0; j < N+2; j++){
-      printf("%2.2lf ",unew[i*(N+2)+j]);
-    }
+  FILE *fp = fopen("results.txt","w");
+  if (f == NULL)
+  {
+    printf("Error opening file\n");
+    return -1;
   }
-  printf("\n");
   for (int i = 0; i < N+2; i++){
-    printf("\n");
     for (int j = 0; j < N+2; j++){
-      printf("%2.2lf ",f[i*(N+2)+j]);
+      fprintf(fp,"%.2lf ",unew[i*(N+2)+j]);
     }
+    fprintf(fp,"\n");
   }
   return 0;
 }
