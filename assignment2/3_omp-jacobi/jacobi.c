@@ -11,7 +11,6 @@ jacobi(double * unew, double * uold, double * f,
   #pragma omp parallel reduction(+: d)
   {
   d = treshold+1;
-  #pragma omp threadprivate(d)
   for (*k = 0; (*k < kmax && d > treshold); (*k)++){
     d = 0;
     #pragma omp for
