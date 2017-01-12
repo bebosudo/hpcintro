@@ -1,4 +1,4 @@
-clear; close all; clc;
+clear; close all;
 load times.csv
 plot(times(:,1),times(:,2),'-o','LineWidth',2)
 xlabel('Threads')
