@@ -1,7 +1,8 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <omp.h>
 void
-jacobi(double * unew, double * uold, double * f, double lambda, int N, int kmax, double treshold);
+jacobi(double * unew, double * uold, double * f, double lambda, int N, int kmax, double treshold, int k);
 
 int main(int argc, char * argv[]){
   if (argc != 4){
@@ -41,18 +42,24 @@ int main(int argc, char * argv[]){
     }
   }
   }
-  jacobi(unew,uold,f,lambda,N,kmax,treshold);
-  FILE *fp = fopen("results.txt","w");
-  if (f == NULL)
+  int k = 0;
+  double ts, te;
+  ts = omp_get_wtime();
+  jacobi(unew,uold,f,lambda,N,kmax,treshold,k);
+  te = omp_get_wtime() - ts;
+
+  FILE *fp1 = fopen("results.txt","w");
+  if (fp1 == NULL)
   {
     printf("Error opening file\n");
     return -1;
   }
   for (int i = 0; i < N+2; i++){
     for (int j = 0; j < N+2; j++){
-      fprintf(fp,"%.2lf ",unew[i*(N+2)+j]);
+      fprintf(fp1,"%.2lf ",unew[i*(N+2)+j]);
     }
-    fprintf(fp,"\n");
+    fprintf(fp1,"\n");
   }
+  printf("%d %d %lf\n",N,k,te);
   return 0;
 }
