@@ -14,6 +14,10 @@ jacobi(double * unew, double * uold, double * f,
                       uold[i*M+j-1]+uold[i*M+j+1]+lambda2*f[i*M+j]) );
 
         d += (unew[i*M+j]-uold[i*M+j])*(unew[i*M+j]-uold[i*M+j]);
+      }
+    }
+    for (int i = 1; i < N+1; i++){
+      for (int j = 1; j < N+1; j++){
         uold[i*M+j] = unew[i*M+j];
       }
     }
