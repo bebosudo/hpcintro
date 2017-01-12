@@ -2,8 +2,8 @@
 #include <stdio.h>
 #include <omp.h>
 void
-gauss(double * unew, double * uold, double * f,
-      double lambda, int N, int kmax, double treshold, int * k);
+gauss(double * u, double * f,
+  double lambda, int N, int kmax, double treshold, int * k);
 
 int main(int argc, char * argv[]){
   if (argc != 4){
@@ -14,39 +14,34 @@ int main(int argc, char * argv[]){
   int kmax = atoi(argv[2]);
   double lambda = (double)2/(N+2);
   double treshold = atof(argv[3]);
-  double * unew =(double *)calloc((N+2)*(N+2),sizeof(double));
-  if (unew == NULL){
+  double * u =(double *)calloc((N+2)*(N+2),sizeof(double));
+
+  if (u == NULL){
     printf("Memory allocation failed");
     return -1;
   }
-  double * uold = (double *)calloc((N+2)*(N+2),sizeof(double));
-  if (uold == NULL){
-    printf("Memory allocation failed");
-    return -1;
-  }
+
   double * f = (double *)calloc((N+2)*(N+2),sizeof(double));
-  if (uold == NULL){
+  if (f == NULL){
     printf("Memory allocation failed");
     return -1;
   }
+
   for(int i = 0; i < N+1; i++){
-    uold[i*(N+2)] = 20;
-    uold[N+1+(N+2)*i] = 20;
-    uold[i] = 20;
-    unew[i*(N+2)] = 20;
-    unew[(N+1)+i*(N+2)] = 20;
-    unew[i] = 20;
+    u[i*(N+2)] = 20;
+    u[(N+1)+i*(N+2)] = 20;
+    u[i] = 20;
     int M = N+2;
-  for (int i = 2*M/3; i <= 5*M/6; i++){
-    for (int j = M/2; j <= 2*M/3; j++){
-      f[i*(N+2)+j] = 200;
+    for (int i = 2*M/3; i <= 5*M/6; i++){
+      for (int j = M/2; j <= 2*M/3; j++){
+        f[i*(N+2)+j] = 200;
+      }
     }
-  }
   }
   double ts, te;
   int k = 0;
   ts = omp_get_wtime();
-  gauss(unew,uold,f,lambda,N,kmax,treshold,&k);
+  gauss(u,f,lambda,N,kmax,treshold,&k);
   te = omp_get_wtime() - ts;
 
   FILE *fp1 = fopen("results.txt","w");
@@ -57,7 +52,7 @@ int main(int argc, char * argv[]){
   }
   for (int i = 0; i < N+2; i++){
     for (int j = 0; j < N+2; j++){
-      fprintf(fp1,"%.2lf ",unew[i*(N+2)+j]);
+      fprintf(fp1,"%.2lf ",u[i*(N+2)+j]);
     }
     fprintf(fp1,"\n");
   }
