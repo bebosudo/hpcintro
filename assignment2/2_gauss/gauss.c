@@ -2,15 +2,13 @@
 #include <stdio.h>
 
 void gauss (double * unew, double * uold, double * f, double lambda,
-            unsigned int N, unsigned int kmax, double treshold) {
+            int N, int kmax, double treshold) {
 
-  double d = 0;
+  double d = treshold+1;
   int M = N + 2;
   int k = 0;
   double lambda2 = lambda * lambda;
-
-  do {
-//    printf("%d\n", k);
+  for (k = 0; (k < kmax && d > treshold); k++){
     d = 0;
     for (int i = 1; i < N+1; i++) {
       for (int j = 1; j < N+1; j++) {
@@ -23,8 +21,7 @@ void gauss (double * unew, double * uold, double * f, double lambda,
         uold[i*M + j] = unew[i*M + j];
       }
     }
-    k++;
-  } while (k < kmax && d > treshold);
+  }
 
-  printf("k=%d - d=%lf\n", k, d);
+  printf("%d %d ",N,k);
 }

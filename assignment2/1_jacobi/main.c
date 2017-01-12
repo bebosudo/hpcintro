@@ -2,7 +2,8 @@
 #include <stdio.h>
 #include <omp.h>
 void
-jacobi(double * unew, double * uold, double * f, double lambda, int N, int kmax, double treshold, int k);
+jacobi(double * unew, double * uold, double * f,
+      double lambda, int N, int kmax, double treshold);
 
 int main(int argc, char * argv[]){
   if (argc != 4){
@@ -42,10 +43,9 @@ int main(int argc, char * argv[]){
     }
   }
   }
-  int k = 0;
   double ts, te;
   ts = omp_get_wtime();
-  jacobi(unew,uold,f,lambda,N,kmax,treshold,k);
+  jacobi(unew,uold,f,lambda,N,kmax,treshold);
   te = omp_get_wtime() - ts;
 
   FILE *fp1 = fopen("results.txt","w");
