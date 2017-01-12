@@ -4,13 +4,13 @@ void
 jacobi(double * unew, double * uold, double * f,
       double lambda, int N, int kmax, double treshold, int * k){
 
-  double d = treshold+1;
   double lambda2 = lambda*lambda;
   int M = N+2;
   int i,j;
 
   #pragma omp parallel reduction(+: d)
   {
+  double d = treshold+1;
   #pragma omp threadprivate(d)
   for (*k = 0; (*k < kmax && d > treshold); (*k)++){
     d = 0;
