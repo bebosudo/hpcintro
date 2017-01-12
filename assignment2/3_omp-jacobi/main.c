@@ -48,10 +48,8 @@ int main(int argc, char * argv[]){
   ts = omp_get_wtime();
   int k = 0;
 
-  #pragma omp parallel
-  {
-    jacobi(unew,uold,f,lambda,N,kmax,treshold,&k);
-  }
+  jacobi(unew,uold,f,lambda,N,kmax,treshold,&k);
+  
 
   te = omp_get_wtime() - ts;
 
