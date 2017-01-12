@@ -9,8 +9,9 @@ jacobi(double * unew, double * uold, double * f,
   int M = N+2;
   int i,j;
 
-  #pragma omp parallel threadprivate(d) reduction(+: d)
+  #pragma omp parallel reduction(+: d)
   {
+  #pragma omp threadprivate(d)
   for (*k = 0; (*k < kmax && d > treshold); (*k)++){
     d = 0;
     #pragma omp for
