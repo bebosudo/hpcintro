@@ -60,6 +60,6 @@ int main(int argc, char * argv[]){
     }
     fprintf(fp1,"\n");
   }
-  printf("%d %d %lf\n",N,k,te);
+  printf("%lf\n",te);
   return 0;
 }

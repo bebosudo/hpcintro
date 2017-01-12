@@ -1,8 +1,9 @@
 #include <stdio.h>
 void
-jacobi(double * unew, double * uold, double * f, double lambda, int N, int kmax, double treshold, int k){
+jacobi(double * unew, double * uold, double * f, double lambda, int N, int kmax, double treshold){
   double d = treshold+1;
   double lambda2 = lambda*lambda;
+  int k = 0;
   int M = N+2;
   for (k = 0; (k < kmax && d > treshold); k++){
     d = 0;
@@ -15,5 +16,5 @@ jacobi(double * unew, double * uold, double * f, double lambda, int N, int kmax,
       }
     }
   }
-  printf("k = %d d = %lf\n",k,d);
+  printf("%d %d ",N,k);
 }
