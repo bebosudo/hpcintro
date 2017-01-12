@@ -35,7 +35,7 @@ jacobi(double * unew, double * uold, double * f,
               }
             } // implicit barrier here
 
-            #pragma omp for /*private(i, j)*/ reduction(+: d)
+            #pragma omp for reduction(+: d)
             for (int i = 1; i < N+1; i++){
               for (int j = 1; j < N+1; j++){
                 d += (unew[i*M+j]-uold[i*M+j])*(unew[i*M+j]-uold[i*M+j]);
