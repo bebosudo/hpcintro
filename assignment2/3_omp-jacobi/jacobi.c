@@ -9,11 +9,11 @@ jacobi(double * unew, double * uold, double * f,
   int M = N+2;
   int i,j;
 
-  #pragma omp parallel
+  #pragma omp parallel reduction(+: d)
   {
   for (*k = 0; (*k < kmax && d > treshold); (*k)++){
     d = 0;
-    #pragma omp for reduction(+:d)
+    #pragma omp for
     for (i = 1; i < N+1; i++) {
       for (j = 1; j < N+1; j++) {
         unew[i*M+j] = ( 0.25*(uold[(i-1)*M+j]+uold[(i+1)*M+j]+
