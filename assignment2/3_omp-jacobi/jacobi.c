@@ -7,11 +7,10 @@ jacobi(double * unew, double * uold, double * f,
   double lambda2 = lambda*lambda;
   int M = N+2;
   int i,j;
-  double d = treshold+1;;
+  double d = treshold+1;
   #pragma omp parallel reduction(+: d)
   {
-  #pragma omp copyin(d);  
-  #pragma omp single
+  #pragma omp master
   for (*k = 0; (*k < kmax && d > treshold); (*k)++){
     d = 0;
     #pragma omp task
