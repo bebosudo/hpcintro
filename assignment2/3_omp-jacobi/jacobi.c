@@ -9,11 +9,11 @@ jacobi(double * unew, double * uold, double * f,
   int M = N+2;
   int i,j;
 
-  for (*k = 0; (*k < kmax && d > treshold); (*k)++){
-    d = 0;
-
   #pragma omp parallel reduction(+:d)
   {
+    
+  for (*k = 0; (*k < kmax && d > treshold); (*k)++){
+    d = 0;
     #pragma omp for
     for (i = 1; i < N+1; i++) {
       for (j = 1; j < N+1; j++) {
