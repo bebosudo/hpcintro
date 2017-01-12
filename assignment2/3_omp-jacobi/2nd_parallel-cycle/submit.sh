@@ -39,6 +39,6 @@ for N in 16 32 64 128 256 512 1024
 do
     for num_th in 1 2 4 8 16 32
     do
-        OMP_NUM_THREADS=${num_th} ./${EXECUTABLE} $N $ITERATIONS_MAX $THRESHOLD > $OUTFILE
+        OMP_NUM_THREADS=${num_th} ./${EXECUTABLE} $N $ITERATIONS_MAX $THRESHOLD >> $OUTFILE
     done
 done

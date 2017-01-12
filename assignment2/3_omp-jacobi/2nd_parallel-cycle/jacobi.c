@@ -7,11 +7,11 @@ jacobi(double * unew, double * uold, double * f,
   double lambda2 = lambda*lambda;
   int M = N+2;
   int i,j;
-  double d = treshold+1;
+  double d = treshold;
 
-  for (*k = 0; (*k < kmax && d > treshold); (*k)++){
-      #pragma omp parallel
-      {
+  #pragma omp parallel
+  {
+    for (*k = 0; (*k < kmax && d >= treshold); (*k)++){
         d = 0;
         #pragma omp for
         for (i = 1; i < N+1; i++) {
