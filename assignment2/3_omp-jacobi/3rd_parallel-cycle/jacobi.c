@@ -7,7 +7,6 @@ jacobi(double * unew, double * uold, double * f,
   double lambda2 = lambda*lambda;
   int M = N+2;
   double d = treshold;
-  *k = kmax;
 
     #pragma omp parallel
     {
