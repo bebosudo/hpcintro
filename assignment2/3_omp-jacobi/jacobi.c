@@ -10,6 +10,7 @@ jacobi(double * unew, double * uold, double * f,
   double d = treshold+1;;
   #pragma omp parallel reduction(+: d)
   {
+  #pragma omp copyin(d);  
   #pragma omp single
   for (*k = 0; (*k < kmax && d > treshold); (*k)++){
     d = 0;
