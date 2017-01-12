@@ -16,7 +16,7 @@ jacobi(double * unew, double * uold, double * f,
     {
         while (*k < kmax && diff >= treshold) {
 
-//            #pragma omp barrier
+            #pragma omp barrier
             #pragma omp single
             {
 //                printf("k=%d, d=%lf\n", *k, d);
