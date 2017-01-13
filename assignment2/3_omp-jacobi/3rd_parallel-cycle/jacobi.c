@@ -7,7 +7,7 @@ jacobi(double * unew, double * uold, double * f,
   double lambda2 = lambda*lambda;
   int M = N+2;
   double* swapper;
-  double diff = treshold;    // TODO add in the latex that we are
+  double diff = 0, d = treshold+1;    // TODO add in the latex that we are
         // using a different var `diff` to avoid using the same variable `d`
         // both for checking whether to enter the loop and for storing the
         // difference.. this is a problem because ....
@@ -15,9 +15,9 @@ jacobi(double * unew, double * uold, double * f,
 
     #pragma omp parallel shared(k, unew, uold, f, lambda2, M)
     {
-        while (*k < kmax && diff >= treshold) {
+        while (*k < kmax && d >= treshold) {
 
-            #pragma omp for reduction(+: diff)
+          #pragma omp for reduction(+: diff)
             for (int i = 1; i < N+1; i++) {
               for (int j = 1; j < N+1; j++) {
                 unew[i*M+j] = ( 0.25*(uold[(i-1)*M+j]+uold[(i+1)*M+j]+
@@ -26,15 +26,15 @@ jacobi(double * unew, double * uold, double * f,
               }
             } // implicit barrier here
 
-            #pragma omp single
-            {
-//                printf("k=%d, diff=%lf\n", *k, diff);
-                diff = 0;
-                (*k)++;
-                swapper = uold;
-                uold = unew;
-                unew = swapper;
-            }
+          #pragma omp single
+          {
+            d = diff;
+            (*k)++;
+            diff = 0;
+            swapper = uold;
+            uold = unew;
+            unew = swapper;
+          }
       }
   }
 
