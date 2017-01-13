@@ -30,24 +30,10 @@ jacobi(double * unew, double * uold, double * f,
             swapper = uold;
             uold = unew;
             unew = swapper;
-<<<<<<< HEAD:assignment2/3_omp-jacobi/3rd_parallel-cycle/jacobi.c
           } // Implicit barrier
       }
   }
   swapper = unew;
   unew = uold;
   unew = swapper;
-=======
-          } // implicit barrier here
-      }
-  }
-
-  // the uold matrix is the one we want to "return", so we swap once more.
-  swapper = unew;
-  unew = uold;
-  unew = swapper;
-
-// TODO: ask whether the barriers exist only at the end of a directive or also at the beginning.
-//    printf("d:%lf\n", d);
->>>>>>> 3ac00383fa1e562dfeb429de35f62395b3422761:assignment2/3_omp-jacobi/3rd_without_collapse/jacobi.c
 }

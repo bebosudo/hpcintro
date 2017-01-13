@@ -1,8 +1,8 @@
-TARGET	= 3_omp_jacobi
+TARGET	= 3_omp_jacobi_no_fast
 LIBSRCS	=
 LIBOBJS	= main.o jacobi.o
 
-OPT	= -g -fast -xopenmp
+OPT	= -g -xopenmp
 PIC	=
 
 CC	= suncc
