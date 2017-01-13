@@ -10,7 +10,7 @@
 #PBS -q hpcintro
 #PBS -l nodes=1:ppn=1
 #PBS -l walltime=1:00:00
-OUTFILE=3.2.${PBS_JOBID}.txt
+OUTFILE=3.1.${PBS_JOBID}.txt
 #PBS -o $OUTFILE
 
 cd $PBS_O_WORKDIR
