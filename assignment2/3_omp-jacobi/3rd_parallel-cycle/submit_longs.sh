@@ -21,7 +21,8 @@ EXECUTABLE=3_omp_jacobi
 ITERATIONS_MAX=1000000
 THRESHOLD=0.001
 
-for N in 512 1024
+# The N value 1260 is due to the comparison with the Mandelbrot function.
+for N in 512 1024 1260
 do
     for num_th in 1 2 4 8 16 32
     do
