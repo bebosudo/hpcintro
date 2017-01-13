@@ -2,10 +2,10 @@
 void
 jacobi(double * unew, double * uold, double * f,
       double lambda, int N, int kmax, double treshold, int * k){
-
   double d = treshold+1;
   double lambda2 = lambda*lambda;
   int M = N+2;
+  double * swapper;
   for (*k = 0; (*k < kmax && d > treshold); (*k)++){
     d = 0;
     for (int i = 1; i < N+1; i++){
@@ -16,10 +16,11 @@ jacobi(double * unew, double * uold, double * f,
         d += (unew[i*M+j]-uold[i*M+j])*(unew[i*M+j]-uold[i*M+j]);
       }
     }
-    for (int i = 1; i < N+1; i++){
-      for (int j = 1; j < N+1; j++){
-        uold[i*M+j] = unew[i*M+j];
-      }
-    }
+    swapper = uold;
+    uold = unew;
+    unew = swapper;
   }
+  swapper = unew;
+  unew = uold;
+  unew = swapper;
 }
