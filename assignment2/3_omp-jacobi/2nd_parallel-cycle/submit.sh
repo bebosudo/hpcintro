@@ -9,7 +9,7 @@
 #PBS -N 3_omp_jac
 #PBS -q hpcintro
 #PBS -l nodes=1:ppn=1
-#PBS -l walltime=10:00
+#PBS -l walltime=1:00:00
 OUTFILE=3_omp_jac.2nd_version.${PBS_JOBID}.txt
 #PBS -o $OUTFILE
 
@@ -35,7 +35,7 @@ EXECUTABLE=3_omp_jacobi
 ITERATIONS_MAX=1000000
 THRESHOLD=0.001
 
-for N in 16 32 64 128 256 512 1024
+for N in 16 32 64 128 256
 do
     for num_th in 1 2 4 8 16 32
     do
