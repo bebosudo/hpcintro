@@ -2,7 +2,7 @@ TARGET	= 2_gauss
 LIBSRCS	=
 LIBOBJS	= main.o gauss.o
 
-OPT	= -g -fast -xopenmp
+OPT	= -g -xopenmp
 PIC	=
 
 CC	= suncc

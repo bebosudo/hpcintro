@@ -1,7 +1,7 @@
 #!/bin/bash
 #PBS -N collector
 #PBS -q hpcintro
-#PBS -l walltime=0:05:00
+#PBS -l walltime=0:45:00
 OUTFILE=timingGauss.${PBS_JOBID}.txt
 #PBS -o $OUTFILE
 cd $PBS_O_WORKDIR
