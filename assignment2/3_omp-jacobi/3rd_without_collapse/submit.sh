@@ -8,7 +8,7 @@
 #
 #PBS -N 3_omp_jac
 #PBS -q hpcintro
-#PBS -l nodes=1:ppn=1
+#PBS -l nodes=1:ppn=20
 #PBS -l walltime=1:00:00
 OUTFILE=3.3.${PBS_JOBID}.txt
 #PBS -o $OUTFILE
@@ -26,7 +26,7 @@ THRESHOLD=0.001
 # The N value 1260 is due to the comparison with the Mandelbrot function.
 for N in 128 256 512 1024 1260 2048 4096 8192 10000
 do
-    for num_th in 1 2 4 8 16 32
+    for num_th in 1 2 4 8 16
     do
         printf "${num_th} " >> $OUTFILE
         OMP_NUM_THREADS=${num_th} ./${EXECUTABLE} $N $ITERATIONS_MAX $THRESHOLD >> $OUTFILE
