@@ -18,6 +18,7 @@ figure
 hold on
 plot(mandel(:,1),mandelS,'-o','LineWidth',2)
 plot(poisson(:,1),poissonS,'-o','LineWidth',2)
+plot(1:16,1:16,'k')
 
 legend('Mandelbrot','Poisson','Location','northwest');
 
