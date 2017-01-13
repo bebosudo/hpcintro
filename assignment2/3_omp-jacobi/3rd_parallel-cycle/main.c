@@ -53,18 +53,18 @@ int main(int argc, char * argv[]){
 
   te = omp_get_wtime() - ts;
 
-  FILE *fp1 = fopen("results.txt","w");
-  if (fp1 == NULL)
-  {
-    printf("Error opening file\n");
-    return -1;
-  }
-  for (int i = 0; i < N+2; i++){
-    for (int j = 0; j < N+2; j++){
-      fprintf(fp1,"%.2lf ",unew[i*(N+2)+j]);
-    }
-    fprintf(fp1,"\n");
-  }
+//  FILE *fp1 = fopen("results.txt","w");
+//  if (fp1 == NULL)
+//  {
+//    printf("Error opening file\n");
+//    return -1;
+//  }
+//  for (int i = 0; i < N+2; i++){
+//    for (int j = 0; j < N+2; j++){
+//      fprintf(fp1,"%.2lf ",unew[i*(N+2)+j]);
+//    }
+//    fprintf(fp1,"\n");
+//  }
   printf("%d %d %lf %lf\n",N,k,te,(double)k/te);
   return 0;
 }
