@@ -10,7 +10,7 @@
 #PBS -q hpcintro
 #PBS -l nodes=1:ppn=20
 #PBS -l walltime=1:00:00
-OUTFILE=3.2.${PBS_JOBID}.txt
+OUTFILE=3.3.${PBS_JOBID}.txt
 #PBS -o $OUTFILE
 
 cd $PBS_O_WORKDIR
@@ -23,7 +23,7 @@ ITERATIONS_MAX=100  # we use a small number of iterations in order to make the
                     # reach the end of the whole calculation.
 THRESHOLD=0.001
 
-
+# The N value 1260 is due to the comparison with the Mandelbrot function.
 for N in 128 256 512 1024 1260 2048 4096 8192 10000
 do
     for num_th in 1 2 4 8 16
@@ -32,3 +32,19 @@ do
         OMP_NUM_THREADS=${num_th} ./${EXECUTABLE} $N $ITERATIONS_MAX $THRESHOLD >> $OUTFILE
     done
 done
+
+# experiment name
+#
+#JID=`echo ${PBS_JOBID%.*}`
+#EXPOUT="$PBS_JOBNAME.${JID}.er"
+
+# uncomment the HWCOUNT line, if you want to use hardware counters
+# define an option string for the harwdware counters (see output of
+# 'collect -h' for valid values.  The format is:
+# -h cnt1,on,cnt2,on,...  (up to four counters at a time)
+#
+# the example below is for L1 hits, L1 misses, L2 hits, L2 misses
+#
+#HWCOUNT="-h dch,on,dcm,on,l2h,on,l2m,on"
+
+#collect -o $EXPOUT $HWCOUNT ./${EXECUTABLE} $N $ITERATIONS_MAX $THRESHOLD
