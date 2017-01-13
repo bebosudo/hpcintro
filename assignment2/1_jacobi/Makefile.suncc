@@ -2,7 +2,7 @@ TARGET	= 1_jacobi
 LIBSRCS	=
 LIBOBJS	= main.o jacobi.o
 
-OPT	= -g -xopenmp
+OPT	= -g -fast -xopenmp
 PIC	=
 
 CC	= suncc
