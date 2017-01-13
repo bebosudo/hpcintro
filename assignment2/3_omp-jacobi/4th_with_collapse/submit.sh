@@ -8,9 +8,9 @@
 #
 #PBS -N 3_omp_jac
 #PBS -q hpcintro
-#PBS -l nodes=1:ppn=1
+## attempt without this option --> PBS -l nodes=1:ppn=1
 #PBS -l walltime=1:00:00
-OUTFILE=3_omp_jac.3rd_version.${PBS_JOBID}.txt
+OUTFILE=3.4.${PBS_JOBID}.txt
 #PBS -o $OUTFILE
 
 cd $PBS_O_WORKDIR

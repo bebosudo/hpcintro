@@ -34,14 +34,15 @@ jacobi(double * unew, double * uold, double * f,
             swapper = uold;
             uold = unew;
             unew = swapper;
-          }
+          } // implicit barrier here
       }
   }
 
+  // the uold matrix is the one we want to "return", so we swap once more.
   swapper = unew;
   unew = uold;
   unew = swapper;
 
-        // TODO: ask whether the barriers exist only at the end of a directive or also at the beginning.
+// TODO: ask whether the barriers exist only at the end of a directive or also at the beginning.
 //    printf("d:%lf\n", d);
 }
