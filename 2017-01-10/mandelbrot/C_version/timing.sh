@@ -11,5 +11,5 @@ module load studio
 for i in 1 2 4 8 16 32
 do
 	printf "$i " >> $OUTFILE
-	OMP_NUM_THREADS=$i ./mandelbrot 1259 >> $OUTFILE
+	OMP_NUM_THREADS=$i ./mandelbrot 10038 >> $OUTFILE
 done
