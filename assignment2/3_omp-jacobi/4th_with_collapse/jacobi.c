@@ -7,10 +7,7 @@ jacobi(double * unew, double * uold, double * f,
   double lambda2 = lambda*lambda;
   int M = N+2;
   double* swapper;
-  double diff = 0, d = treshold+1;    // TODO add in the latex that we are
-        // using a different var `diff` to avoid using the same variable `d`
-        // both for checking whether to enter the loop and for storing the
-        // difference.. this is a problem because ....
+  double diff = 0, d = treshold+1;
   *k = 0;
 
     #pragma omp parallel shared(k, unew, uold, f, lambda2, M)
@@ -37,12 +34,7 @@ jacobi(double * unew, double * uold, double * f,
           } // implicit barrier here
       }
   }
-
-  // the uold matrix is the one we want to "return", so we swap once more.
   swapper = unew;
   unew = uold;
   unew = swapper;
-
-// TODO: ask whether the barriers exist only at the end of a directive or also at the beginning.
-//    printf("d:%lf\n", d);
 }
