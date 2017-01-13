@@ -1,4 +1,4 @@
-filename = 'results.txt';
+filename = 'results1024.txt';
 Z = importdata(filename);
 [M,N] = size(Z);
 
@@ -11,4 +11,4 @@ colorbar
 colormap('jet')
 set(gca,'fontsize',14);
 set(gcf, 'Color', 'w');
-export_fig 'room.png'
+export_fig 'room1024.png'
