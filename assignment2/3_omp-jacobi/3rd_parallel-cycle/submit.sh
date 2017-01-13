@@ -18,11 +18,13 @@ cd $PBS_O_WORKDIR
 module load studio > /dev/null
 
 EXECUTABLE=3_omp_jacobi
-ITERATIONS_MAX=1000000
+ITERATIONS_MAX=100  # we use a small number of iterations in order to make the
+                    # program hit the stopping criterion, we don't need it to
+                    # reach the end of the whole calculation.
 THRESHOLD=0.001
 
 # The N value 1260 is due to the comparison with the Mandelbrot function.
-for N in 512 1024 1260
+for N in 128 256 512 1024 1260 2048 4096 8192 10000
 do
     for num_th in 1 2 4 8 16 32
     do
