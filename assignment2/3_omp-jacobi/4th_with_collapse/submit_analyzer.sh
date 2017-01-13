@@ -8,9 +8,9 @@
 #
 #PBS -N 3_omp_jac
 #PBS -q hpcintro
-#PBS -l nodes=1:ppn=20
+#PBS -l nodes=1:ppn=4
 #PBS -l walltime=1:00:00
-OUTFILE=3.1.${PBS_JOBID}.txt
+OUTFILE=3.4.${PBS_JOBID}.txt
 #PBS -o $OUTFILE
 
 cd $PBS_O_WORKDIR
@@ -35,10 +35,10 @@ EXPOUT="$PBS_JOBNAME.${JID}.er"
 #
 # the example below disables L1 hits, L1 misses, L2 hits, L2 misses
 #
-HWCOUNT="-h dch,off,dcm,off,l2h,off,l2m,off"
+#HWCOUNT="-h dch,off,dcm,off,l2h,off,l2m,off"
 
 # start the collect command with the above settings
-collect -o $EXPOUT $HWCOUNT ./$EXECUTABLE $PERM $MKN $BLKSIZE
+#collect -o $EXPOUT $HWCOUNT ./$EXECUTABLE $PERM $MKN $BLKSIZE
 
 for N in 10000
 do
