@@ -25,4 +25,5 @@ xlabel('Processors')
 ylabel('Speed up')
 set(gca,'fontsize',14);
 set(gcf, 'Color', 'w');
+axis([1 16 1 16])
 export_fig 'mandelbrotComp.png'
