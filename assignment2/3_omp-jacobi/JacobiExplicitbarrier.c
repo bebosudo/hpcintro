@@ -7,13 +7,18 @@ jacobi(double * unew, double * uold, double * f,
   double lambda2 = lambda*lambda;
   int M = N+2;
   double* swapper;
-  double diff = 0, d = treshold+1;
+  double diff = 0;
   *k = 0;
 
     #pragma omp parallel shared(k, unew, uold, f, lambda2, M)
     {
-        while (*k < kmax && d >= treshold) {
-
+        while (*k < kmax && diff >= treshold) {
+          #pragma omp barrier
+          #pragma omp single
+          {
+            diff = 0;
+            (*k)++;
+          }
           #pragma omp for reduction(+: diff)
             for (int i = 1; i < N+1; i++) {
               for (int j = 1; j < N+1; j++) {
@@ -24,30 +29,13 @@ jacobi(double * unew, double * uold, double * f,
             } // Implicit barrier
           #pragma omp single
           {
-            d = diff;
-            (*k)++;
-            diff = 0;
             swapper = uold;
             uold = unew;
             unew = swapper;
-<<<<<<< HEAD:assignment2/3_omp-jacobi/3rd_parallel-cycle/jacobi.c
           } // Implicit barrier
       }
   }
   swapper = unew;
   unew = uold;
   unew = swapper;
-=======
-          } // implicit barrier here
-      }
-  }
-
-  // the uold matrix is the one we want to "return", so we swap once more.
-  swapper = unew;
-  unew = uold;
-  unew = swapper;
-
-// TODO: ask whether the barriers exist only at the end of a directive or also at the beginning.
-//    printf("d:%lf\n", d);
->>>>>>> 3ac00383fa1e562dfeb429de35f62395b3422761:assignment2/3_omp-jacobi/3rd_without_collapse/jacobi.c
 }
