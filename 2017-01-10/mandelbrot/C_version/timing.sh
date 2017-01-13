@@ -1,7 +1,7 @@
 #!/bin/bash
 #PBS -N collector
 #PBS -q hpcintro
-#PBS -l nodes=1:ppn=1
+#PBS -l nodes=1:ppn=20
 #PBS -l walltime=0:10:00
 OUTFILE=timingMandelbrot.${PBS_JOBID}.txt
 #PBS -o $OUTFILE
