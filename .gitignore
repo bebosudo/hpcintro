@@ -6,3 +6,6 @@
 
 # hide analyzer files from git(hub)
 results_not_to_upload/
+
+# hide CUDA samples
+2017-01-16/exercises/samples/*
