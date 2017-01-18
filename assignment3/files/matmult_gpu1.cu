@@ -11,26 +11,27 @@
 // n represents the number of columns (the horizontal length) of B and C.
 //    ____k____            ____n____           ____n____
 //    |        |           |        |          |       |
-//  m |    A   |   X    k  |   B    |  =    m  |   C   |
+//  m |    A   |   X    k  |    B   |  =    m  |   C   |
 //    |        |           |        |          |       |
 //    ---------            ---------           ---------
 
 
-__global__ m1(int m, int n, int k, double *A, double *B, double *C, int out_row, int out_col) {
-    int r, c;
-    int i, j;
-    double sum;
+__global__ void m1(int m, int n, int k, double *A, double *B, double *C) {
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++) {
+            C[i*n + j] = 0;
+        }
+    }
 
-    for (i=0; i<m; i++) {
-        // sum = 0.0;
-        for (j=0; j<n; j++) {
-    // double sum = 0.0;
-    C[out_row*n + out_col] = 0.0;
-
-    for(i=0; i<k; i++) {
-        C[out_row*n + out_col] += A[out_row*n + i] * B[out_col + i];
+    for (int i = 0; i < m; i++) {
+        for (int h = 0; h < k; h++){
+            for (int j = 0; j < n; j++) {
+                C[i*n + j] += A[i*n + h] * B[h*n + j];
+            }
+        }
     }
 }
+
 
 extern "C" {
     void matmult_gpu1(int m, int n, int k, double *A, double *B, double *C) {
@@ -42,9 +43,10 @@ extern "C" {
 
         cudaMemcpy(d_A, A, m*k * sizeof(double), cudaMemcpyHostToDevice);
         cudaMemcpy(d_B, B, k*n * sizeof(double), cudaMemcpyHostToDevice);
+        // cudaMemcpy(d_B, B, k*n * sizeof(double), cudaMemcpyHostToDevice);
 
 
-        m1<<<1,1>>>(m, n, k, d_A, d_B, d_C, i, j);
+        m1<<<1,1>>>(m, n, k, d_A, d_B, d_C);
 
         cudaMemcpy(C, d_C, m*n * sizeof(double), cudaMemcpyDeviceToHost);
 
