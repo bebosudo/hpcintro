@@ -17,16 +17,16 @@
 
 
 __global__ void m1(int m, int n, int k, double *A, double *B, double *C) {
-    for (int i = 0; i < m; i++) {
-        for (int j = 0; j < n; j++) {
-            C[i*n + j] = 0;
-        }
-    }
+    // for (int i = 0; i < m; i++) {
+    //     for (int j = 0; j < n; j++) {
+    //         C[i*n + j] = 0;
+    //     }
+    // }
 
     for (int i = 0; i < m; i++) {
         for (int h = 0; h < k; h++){
             for (int j = 0; j < n; j++) {
-                C[i*n + j] += A[i*n + h] * B[h*n + j];
+                C[i*n + j] += A[i*k + h] * B[h*n + j];
             }
         }
     }
@@ -43,10 +43,12 @@ extern "C" {
 
         cudaMemcpy(d_A, A, m*k * sizeof(double), cudaMemcpyHostToDevice);
         cudaMemcpy(d_B, B, k*n * sizeof(double), cudaMemcpyHostToDevice);
-        // cudaMemcpy(d_B, B, k*n * sizeof(double), cudaMemcpyHostToDevice);
 
+        // Initialize the output matrix with zeroes.
+        cudaMemset(d_C, 0, m*n * sizeof(double));
 
         m1<<<1,1>>>(m, n, k, d_A, d_B, d_C);
+        cudaDeviceSynchronize();
 
         cudaMemcpy(C, d_C, m*n * sizeof(double), cudaMemcpyDeviceToHost);
 

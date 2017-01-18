@@ -9,3 +9,6 @@ results_not_to_upload/
 
 # hide CUDA samples
 2017-01-16/exercises/samples/*
+
+# no need to synchronize the output library (it always causes merges)
+assignment3/files/libmatmult.so

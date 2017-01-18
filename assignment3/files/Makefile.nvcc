@@ -19,10 +19,12 @@ SOFLAGS = -shared
 XLIBS	= -lcublas
 
 $(TARGET): $(LIBOBJS)
+	# module load gcc/5.3.0 cuda/8.0
 	$(CXX) -o $@ $(CXXFLAGS) $(SOFLAGS) $(INCLUDES) $^ $(XLIBS)
 
 .SUFFIXES: .cu
 .cu.o:
+	# module load gcc/5.3.0 cuda/8.0
 	$(CXX) -o $*.o -c $*.cu $(CXXFLAGS) $(SOFLAGS) $(INCLUDES)
 
 clean:
