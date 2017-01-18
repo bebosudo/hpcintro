@@ -16,7 +16,7 @@
 //    ---------            ---------           ---------
 
 #include <omp.h>
-
+#include <stdio.h>
 __global__ void m2(int m, int n, int k, double *A, double *B, double *C) {
 
   int i = blockIdx.x*blockDim.x+threadIdx.x;
