@@ -50,19 +50,25 @@ int main(int argc, char * argv[]){
 	cudaMemcpy( d_u1, u1, size, cudaMemcpyHostToDevice );
 	cudaMemcpy( d_u2, u2, size, cudaMemcpyHostToDevice );
 
+	int blockSize = 32;
+	dim3 dimBlock(blockSize,blockSize,1); 
+  	int gridSize = 1 + ((N - 1) / blockSize); // N/blockSize round up.
+  	dim3 dimGrid(gridSize,gridSize,1);
+
 	double ts, te;
 	ts = omp_get_wtime();
 	for(int k = 0; k<kmax; k++){
-		jacobi<<<1,1>>>(d_u1,d_u2,d_f,N,lambda2);
+		jacobi<<<dimGrid,dimBlock>>>(d_u1,d_u2,d_f,N,lambda2);
 		cudaDeviceSynchronize();
 	
-		jacobi<<<1,1>>>(d_u2,d_u1,d_f,N,lambda2);
+		jacobi<<<dimGrid,dimBlock>>>(d_u2,d_u1,d_f,N,lambda2);
 		cudaDeviceSynchronize();
 	}
 	te = omp_get_wtime() - ts;
 
 	cudaMemcpy( u1, d_u1, size, cudaMemcpyDeviceToHost );
 	
+	printf("Time: %4.3lf s\n", te);
 	FILE *fp1 = fopen("results.txt","w");
 	if (fp1 == NULL) {
 		printf("Error opening file\n");
