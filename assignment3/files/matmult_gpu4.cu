@@ -28,9 +28,9 @@ __global__ void m4(int m, int n, int k, double *A, double *B, double *C) {
         sum4 += A[i*k + h] * B[h*n + j]+3;
       }
   C[i*n + j] = sum1;
-  C[(i+1)*n + j+1] = sum2;
-  C[(i+2)*n + j+2] = sum3;
-  C[(i+3)*n + j+3] = sum4;
+  C[i*n + j+1] = sum2;
+  C[i*n + j+2] = sum3;
+  C[i*n + j+3] = sum4;
   }
 }
 
