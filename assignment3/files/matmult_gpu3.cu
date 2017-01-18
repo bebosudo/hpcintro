@@ -17,14 +17,17 @@
 
 __global__ void m3(int m, int n, int k, double *A, double *B, double *C) {
 
+  double sum1
   int i = blockIdx.x*blockDim.x+threadIdx.x;
   int j = blockIdx.y*blockDim.y+threadIdx.y;
   j *= 2;
   if (i < m && j < n){
       for (int h = 0; h < k; h++) {
-        C[i*n + j] += A[i*k + h] * B[h*n + j];
-        C[i*n + j + 1] += A[i*k + h] * B[h*n + j + 1];
+        sum1 += A[i*k + h] * B[h*n + j];
+        sum2 += A[i*k + h] * B[h*n + j + 1];
       }
+  C[i*n + j] = sum1;
+  C[i*n + j + 1] = sum2;
   }
 }
 

@@ -19,13 +19,18 @@
 __global__ void m5(int m, int n, int k, double *A, double *B, double *C) {
     int i = blockIdx.x*blockDim.x+threadIdx.x;
     int j = blockIdx.y*blockDim.y+threadIdx.y;
-
+    
     if (i < m && j < n){
-        for (int h = 0; h < k; h++) {
-            C[i*n + j] += A[i*k + h] * B[h*n + j];
-        }
+      A_s[threadIdx.x*blockDim.y + threadId.y] = A[i*n + j];
+      B_s[threadIdx.y*blockDim.x + threadId.x] = B[i*n + j];
+
+      __syncthreads();
+
+      for (int h = 0; h < blockDim.x; h++) {
+          C[i*n + j] += A_s[i*k + h] * B_s[h*n + j];
+      }
     }
-}
+  }
 
 
 extern "C" {
@@ -44,6 +49,10 @@ extern "C" {
 
         dim3 blockDim(16,16);
         dim3 gridDim( (m-1)/blockDim.x+1, (n-1)/blockDim.y+1 );
+
+        __shared__ double * d_A_s, * d_B_s;
+        cudaMalloc((void**)&d_A_s, blockDim.x * blockDim.y * sizeof(double));
+        cudaMalloc((void**)&d_B, blockDim.x * blockDim.y * sizeof(double));
 
         m5<<<blockDim,gridDim>>>(m, n, k, d_A, d_B, d_C);
         cudaDeviceSynchronize();
