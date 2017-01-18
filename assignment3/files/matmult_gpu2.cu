@@ -16,7 +16,7 @@
 //    ---------            ---------           ---------
 
 #include <omp.h>
-#include <stdio.h>
+
 __global__ void m2(int m, int n, int k, double *A, double *B, double *C) {
 
   int i = blockIdx.x*blockDim.x+threadIdx.x;
@@ -44,12 +44,9 @@ extern "C" {
         // Initialize the output matrix with zeroes.
         cudaMemset(d_C, 0, m*n * sizeof(double));
 
-        double time = omp_get_wtime();
         m2<<<1,1>>>(m, n, k, d_A, d_B, d_C);
         cudaDeviceSynchronize();
-        double elapsed1 = omp_get_wtime() - time;
 
-        printf("Kernel: %lf s",elapsed1);
         cudaMemcpy(C, d_C, m*n * sizeof(double), cudaMemcpyDeviceToHost);
 
         cudaFree(d_A); cudaFree(d_B); cudaFree(d_C);
