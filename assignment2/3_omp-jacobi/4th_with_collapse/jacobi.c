@@ -3,13 +3,11 @@
 void
 jacobi(double * unew, double * uold, double * f,
       double lambda, int N, int kmax, double treshold, int * k){
-
   double lambda2 = lambda*lambda;
   int M = N+2;
   double* swapper;
   double diff = 0, d = treshold+1;
   *k = 0;
-
     #pragma omp parallel shared(k, unew, uold, f, lambda2, M)
     {
         while (*k < kmax && d >= treshold) {
