@@ -55,14 +55,13 @@ __global__ void m3_3(int m, int n, int k, double *A, double *B, double *C) {
   double sum1,sum2;
   int i = blockIdx.x*blockDim.x+threadIdx.x;
   int j = blockIdx.y*blockDim.y+threadIdx.y;
-  j *= 2;
   if (i < m && j < n){
       for (int h = 0; h < k; h++) {
         sum1 += A[i*k + h] * B[h*n + j];
-        sum2 += A[(i+1)*k + h] * B[h*n + j];
+        sum2 += A[(i+blockDim.x)*k + h] * B[h*n + j];
       }
   C[i*n + j] = sum1;
-  C[(i+1)*n + j] = sum2;
+  C[(i+blockDim.x)*n + j] = sum2;
   }
 }
 
@@ -81,7 +80,7 @@ extern "C" {
         cudaMemset(d_C, 0, m*n * sizeof(double));
         dim3 BlockDim(16,16);
         dim3 NumBlocks((m/2-1)/16+1,((n-1)/16+1));
-        m3_1<<<NumBlocks,BlockDim>>>(m, n, k, d_A, d_B, d_C);
+        m3_3<<<NumBlocks,BlockDim>>>(m, n, k, d_A, d_B, d_C);
         cudaDeviceSynchronize();
 
         cudaMemcpy(C, d_C, m*n * sizeof(double), cudaMemcpyDeviceToHost);
