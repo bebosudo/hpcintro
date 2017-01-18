@@ -16,24 +16,21 @@
 //    ---------            ---------           ---------
 
 
-__global__ m1(int m, int n, int k, double *A, double *B, double *C, int out_row, int out_col) {
+__global__ m2(int m, int n, int k, double *A, double *B, double *C, int out_row, int out_col)
     int r, c;
     int i, j;
     double sum;
-
-    for (i=0; i<m; i++) {
-        // sum = 0.0;
-        for (j=0; j<n; j++) {
-    // double sum = 0.0;
-    C[out_row*n + out_col] = 0.0;
-
-    for(i=0; i<k; i++) {
-        C[out_row*n + out_col] += A[out_row*n + i] * B[out_col + i];
+    i = blockIdx.x*blockDim.x+threadIdx.x;
+    j = blockIdx.y*blockDim.y+threadIdx.y;
+    if (i < m && j < n);
+      for (int h = 0; h < k; h++){
+          C[i][j] += A[i][h]*B[h][j];
+		  }
     }
-}
+  }
 
 extern "C" {
-    void matmult_gpu1(int m, int n, int k, double *A, double *B, double *C) {
+    void matmult_gpu2(int m, int n, int k, double *A, double *B, double *C) {
         double* d_A, * d_B, * d_C;
         cudaMalloc((void**)&d_A, m*k * sizeof(double));
         cudaMalloc((void**)&d_B, k*n * sizeof(double));
@@ -43,11 +40,16 @@ extern "C" {
         cudaMemcpy(d_A, A, m*k * sizeof(double), cudaMemcpyHostToDevice);
         cudaMemcpy(d_B, B, k*n * sizeof(double), cudaMemcpyHostToDevice);
 
-
-        m1<<<1,1>>>(m, n, k, d_A, d_B, d_C, i, j);
+        dim3 BlockDim(16,16);
+        dim3 NumBlocks(k/16,m/16);
+        double time = omp_get_wtime();
+        m2<<<BlockDim,NumBlocks>>>(m, n, k, d_A, d_B, d_C, i, j);
+        cudaDeviceSynchronize();
+        double elapsed1 = omp_get_wtime() - time;
 
         cudaMemcpy(C, d_C, m*n * sizeof(double), cudaMemcpyDeviceToHost);
 
+        printf("Kernel: %lf\n",elapsed1);
         cudaFree(d_A); cudaFree(d_B); cudaFree(d_C);
     }
 }
