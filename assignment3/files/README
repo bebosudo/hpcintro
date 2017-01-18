@@ -1,0 +1,48 @@
+This file describes additional specifications and tools for the 3. assignment in 
+the DTU course 02614.
+
+Please re-read the README for Assignment 1 for more details.
+
+New files:
+----------
+
+Makefile.nvcc   - Makefile template for CUDA C code compiled with nvcc
+matmult_f.nvcc  - driver using vector coding style for libraries built 
+                  with nvcc, linked with CUBLAS and multithreaded CBLAS from ATLAS
+
+Changes and additions
+---------------------
+
+The drivers still take the same command line arguments:
+
+matmult_f.nvcc type m n k [bs]
+
+where m, n, k are the parameters defining the matrix sizes, bs is the
+optional blocksize for the block version, and type can be one of:
+
+nat     - the native/naïve version
+lib     - the library version (note that this now calls a multithreaded library)
+gpu1    - the first gpu version
+gpu2    - the second gpu version
+gpu3    - the third gpu version
+gpu4    - the fourth gpu version
+gpu5    - the fifth gpu version
+gpu6    - the sixth gpu version
+gpulib  - the CUBLAS library version
+
+as well as blk, mnk, nmk, ... (the permutations).
+
+Changes:
+ * The timer in the drivers has been changed to a wall clock timer, which 
+   makes the MFLOPS calculation very sensitive to other user activity. 
+ * The drivers are now linked to a multithreaded CBLAS library, which launches 
+   more threads to do the matrix multiplication on the CPU (if estimated to be 
+   worth while by the ATLAS implementation).
+ * When using the drivers for type 'gpu', the first iteration will wake up the
+   GPU (takes approx. 0.5 sec) and this iteration is therefore ignored in the 
+   MFLOPS calculation. This means that using MFLOPS_MAX_IT=1 will actually run 
+   the selected function twice, where the timing of the first run is ignored.
+
+With the help of this driver program, you should be able to run all matrix 
+multiplication experiments needed for Assignment 3 in the same manner as for
+Assignment 1. 
