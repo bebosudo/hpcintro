@@ -18,7 +18,7 @@
 //Version 1: second element below neighbor
 __global__ void m3_1(int m, int n, int k, double *A, double *B, double *C) {
 
-  double sum1,sum2;
+  double sum1 = 0,sum2 = 0;
   int i = blockIdx.x*blockDim.x+threadIdx.x;
   int j = blockIdx.y*blockDim.y+threadIdx.y;
   i *= 2;
@@ -35,7 +35,7 @@ __global__ void m3_1(int m, int n, int k, double *A, double *B, double *C) {
 //Version 2: second element right neighbor
 __global__ void m3_2(int m, int n, int k, double *A, double *B, double *C) {
 
-  double sum1,sum2;
+  double sum1 = 0,sum2 = 0;
   int i = blockIdx.x*blockDim.x+threadIdx.x;
   int j = blockIdx.y*blockDim.y+threadIdx.y;
   j *= 2;
@@ -80,8 +80,8 @@ extern "C" {
         // Initialize the output matrix with zeroes.
         cudaMemset(d_C, 0, m*n * sizeof(double));
         dim3 BlockDim(16,16);
-        dim3 NumBlocks((m/2-1)/16+1,((n-1)/16+1));
-        m3_1<<<NumBlocks,BlockDim>>>(m, n, k, d_A, d_B, d_C);
+        dim3 NumBlocks((m-1)/16+1,((n/2-1)/16+1));
+        m3_2<<<NumBlocks,BlockDim>>>(m, n, k, d_A, d_B, d_C);
         cudaDeviceSynchronize();
 
         cudaMemcpy(C, d_C, m*n * sizeof(double), cudaMemcpyDeviceToHost);
