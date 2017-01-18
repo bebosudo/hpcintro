@@ -1,6 +1,6 @@
 TARGET	= libmatmult.so
-LIBSRCS	= 
-LIBOBJS	= 
+LIBSRCS	=
+LIBOBJS	= matmult_lib.o
 
 OPT	= -g
 PIC = -fpic
@@ -26,4 +26,4 @@ $(TARGET): $(LIBOBJS)
 	$(CXX) -o $*.o -c $*.cu $(CXXFLAGS) $(SOFLAGS) $(INCLUDES)
 
 clean:
-	@/bin/rm -f $(TARGET) $(LIBOBJS) 
+	@/bin/rm -f $(TARGET) $(LIBOBJS)
