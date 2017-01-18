@@ -1,1 +1,1 @@
-files/Makefile.nvcc
+Makefile.nvcc
