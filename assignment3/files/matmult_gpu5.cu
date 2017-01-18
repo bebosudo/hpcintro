@@ -24,8 +24,10 @@ __global__ void m5(int m, int n, int k, double *A, double *B, double *C) {
     // from the kernel invocation, and we have to "split" it manually into the
     // two variables we want to use.
     extern __shared__ double two_blocks[];
-    __shared__ double* A_s = &two_blocks[0];
-    __shared__ double* B_s = &two_blocks[blockDim.x*blockDim.y];
+    __shared__ double* A_s;
+    A_s = &two_blocks[0];
+    __shared__ double* B_s;
+    B_s = &two_blocks[blockDim.x*blockDim.y];
 
     if (i < m && j < n) {
         A_s[threadIdx.y*blockDim.x + threadIdx.x] = A[i*n + j];
