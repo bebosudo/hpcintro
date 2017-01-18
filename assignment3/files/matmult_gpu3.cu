@@ -53,7 +53,7 @@ __global__ void m3_2(int m, int n, int k, double *A, double *B, double *C) {
 __global__ void m3_3(int m, int n, int k, double *A, double *B, double *C) {
 
   double sum1 = 0,sum2 = 0;
-  int i = blockIdx.x*blockDim.x+threadIdx.x;
+  int i = blockIdx.x*blockDim.x*2+threadIdx.x;
   int j = blockIdx.y*blockDim.y+threadIdx.y;
   if (i < m && j < n){
       for (int h = 0; h < k; h++) {
