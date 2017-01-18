@@ -17,13 +17,30 @@
 
 
 __global__ void m5(int m, int n, int k, double *A, double *B, double *C) {
-    int i = blockIdx.x*blockDim.x+threadIdx.x;
-    int j = blockIdx.y*blockDim.y+threadIdx.y;
+    int i = blockIdx.x*blockDim.x + threadIdx.x;
+    int j = blockIdx.y*blockDim.y + threadIdx.y;
 
-    if (i < m && j < n){
-        for (int h = 0; h < k; h++) {
-            C[i*n + j] += A[i*k + h] * B[h*n + j];
+    // This variable 'two_blocks' (the name can be changed to whatever) comes
+    // from the kernel invocation, and we have to "split" it manually into the
+    // two variables we want to use.
+    extern __shared__ double two_blocks[];
+    double* A_s = &two_blocks[0];
+    double* B_s = &two_blocks[blockDim.x*blockDim.y];
+
+    if (i < m && j < n) {
+        A_s[threadIdx.y*blockDim.x + threadIdx.x] = A[i*n + j];
+        B_s[threadIdx.x*blockDim.y + threadIdx.y] = B[i*n + j];
+
+        __syncthreads();
+
+        int ii = threadIdx.y;
+        int jj = threadIdx.x;
+        double sum = 0.0;
+
+        for (int h = 0; h < blockDim.y; h++) {
+            sum += A_s[ii*blockDim.y + h] * B_s[h*n + jj];
         }
+        C[i*n + j] += sum;
     }
 }
 
@@ -45,7 +62,11 @@ extern "C" {
         dim3 blockDim(16,16);
         dim3 gridDim( (m-1)/blockDim.x+1, (n-1)/blockDim.y+1 );
 
-        m5<<<blockDim,gridDim>>>(m, n, k, d_A, d_B, d_C);
+
+        // https://devblogs.nvidia.com/parallelforall/using-shared-memory-cuda-cc/
+        // dynamically "pass" the shared memory to the kernel function. 
+        // Otherwise we should place some constants in the kernel function.
+        m5<<<blockDim, gridDim, (blockDim.x*blockDim.y * 2 * sizeof(double))>>>(m, n, k, d_A, d_B, d_C);
         cudaDeviceSynchronize();
 
         cudaMemcpy(C, d_C, m*n * sizeof(double), cudaMemcpyDeviceToHost);
