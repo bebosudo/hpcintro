@@ -23,12 +23,12 @@ __global__ void m4_1(int m, int n, int k, double *A, double *B, double *C) {
   if (i < m && j < n){
       for (int h = 0; h < k; h++) {
         sum1 += A[i*k + h] * B[h*n + j];
-        sum2 += A[i*k + h] * B[h*n + j+1];
+        if (j+1 < n) sum2 += A[i*k + h] * B[h*n + j+1];
         if (j+2 < n) sum3 += A[i*k + h] * B[h*n + j+2];
         if (j+3 < n) sum4 += A[i*k + h] * B[h*n + j+3];
       }
   C[i*n + j] = sum1;
-  C[i*n + j+1] = sum2;
+  if (j+1 < n) C[i*n + j+1] = sum2;
   if (j+2 < n) C[i*n + j+2] = sum3;
   if (j+2 < n) C[i*n + j+3] = sum4;
   }
