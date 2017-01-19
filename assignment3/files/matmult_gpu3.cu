@@ -43,10 +43,10 @@ __global__ void m3_2(int m, int n, int k, double *A, double *B, double *C) {
   if (i < m && j < n){
       for (int h = 0; h < k; h++) {
         sum1 += A[i*k + h] * B[h*n + j];
-        sum2 += A[i*k + h] * B[h*n + j+1];
+        if (j+1 < n) sum2 += A[i*k + h] * B[h*n + j+1];
       }
   C[i*n + j] = sum1;
-  C[i*n + j + 1] = sum2;
+  if (j+1 < n) C[i*n + j + 1] = sum2;
   }
 }
 
@@ -81,10 +81,10 @@ extern "C" {
         // Initialize the output matrix with zeroes.
         cudaMemset(d_C, 0, m*n * sizeof(double));
         dim3 BlockDim(16,16);
-        dim3 NumBlocks((m/2-1)/16+1,((n-1)/16+1));
+        dim3 NumBlocks((m-1)/16+1,((n/2-1)/16+1));
 
         double time = omp_get_wtime();
-        m3_1<<<NumBlocks,BlockDim>>>(m, n, k, d_A, d_B, d_C);
+        m3_2<<<NumBlocks,BlockDim>>>(m, n, k, d_A, d_B, d_C);
         cudaDeviceSynchronize();
         double elapsed1 = omp_get_wtime() - time;
 
