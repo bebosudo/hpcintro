@@ -33,8 +33,8 @@ __global__ void m6(int m, int n, int k, double *A, double *B, double *C) {
       for (int h = 0; h < blockDim.x; h++) {
         sum += A_s[ii*blockDim.x + h] * B_s[h*blockDim.x + jj];
       }
-      C[i*n + j] += sum;
       __syncthreads();
+      C[i*n + j] += sum;
     }
   }
 }
