@@ -68,7 +68,7 @@ extern "C" {
         // Initialize the output matrix with zeroes.
         cudaMemset(d_C, 0, m*n * sizeof(double));
         dim3 BlockDim(16,16);
-        dim3 NumBlocks((m-1)/16+1,((n-1)/4+1)/16+1);
+        dim3 NumBlocks((m-1)/16+1,(((n-1)/4+1)-1)/16+1);
         m4_1<<<NumBlocks,BlockDim>>>(m, n, k, d_A, d_B, d_C);
         checkCudaErrors(cudaDeviceSynchronize());
 

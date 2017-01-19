@@ -16,14 +16,15 @@
 //    ---------            ---------           ---------
 
 __global__ void m2(int m, int n, int k, double *A, double *B, double *C) {
-
+  double sum = 0;
   int i = blockIdx.x*blockDim.x+threadIdx.x;
   int j = blockIdx.y*blockDim.y+threadIdx.y;
 
   if (i < m && j < n){
     for (int h = 0; h < k; h++) {
-      C[i*n + j] += A[i*k + h] * B[h*n + j];
+      sum += A[i*k + h] * B[h*n + j];
     }
+    C[i*n + j] = sum;
   }
 }
 
