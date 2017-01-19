@@ -35,4 +35,13 @@ module load cuda/8.0
 #   than 2 cpu-cores
 #
 
-./
+declare -A size_its
+size_its=( [512]=5000 [1024]=1000 [2048]=100 [4096]=10 [8192]=1 [10240]=1 )
+
+for method in lib gpu1 gpu2 gpu3 gpu4 gpulib #gpu5 # gpu5 not working yet.
+do
+    for size in 512 1024 2048 4096 8192 10240
+    do
+        MFLOPS_MAX_IT=${size_its[${size}]} MATMULT_COMPARE ./matmult_f.nvcc2 $method $size $size $size
+    done
+done
