@@ -22,7 +22,7 @@ __global__ void m2(int m, int n, int k, double *A, double *B, double *C) {
   __shared__ double A_s[16*16];
   __shared__ double B_s[16*16];
   int ii = threadIdx.x;
-  int jj = threadIdy.y;
+  int jj = threadIdx.y;
   if (i < m && j < n){
     for (int w = 0; w < k; w += blockDim.x){
       A_s[threadIdx.x*blockDim.y + threadIdx.y] = A[blockDim.x*k+threadIdx.x*k+threadIdx.y+w];
