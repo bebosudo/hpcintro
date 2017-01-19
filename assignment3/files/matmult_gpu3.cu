@@ -14,6 +14,7 @@
 //  m |    A   |   X    k  |    B   |  =    m  |   C   |
 //    |        |           |        |          |       |
 //    ---------            ---------           ---------
+#include <stdio.h>
 #include <omp.h>
 //Version 1: second element below neighbor
 __global__ void m3_1(int m, int n, int k, double *A, double *B, double *C) {
