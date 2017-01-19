@@ -51,11 +51,11 @@ __global__ void m4_2(int m, int n, int k, double *A, double *B, double *C) {
         sum4 += A[(i+3)*k + h] * B[h*n + j];
       }
   C[i*n + j] = sum1;
-  //if (i+1 < m)
+  if (i+1 < m)
    C[(i+1)*n + j] = sum2;
-  //if (i+2 < m)
+  if (i+2 < m)
   C[(i+2)*n + j] = sum3;
-  //if (i+3 < m)
+  if (i+3 < m)
   C[(i+3)*n + j] = sum4;
   }
 }

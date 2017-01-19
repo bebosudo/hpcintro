@@ -26,10 +26,10 @@ __global__ void m3_1(int m, int n, int k, double *A, double *B, double *C) {
   if (i < m && j < n){
       for (int h = 0; h < k; h++) {
         sum1 += A[i*k + h] * B[h*n + j];
-        sum2 += A[(i+1)*k + h] * B[h*n + j];
+        if (i+1 < m) sum2 += A[(i+1)*k + h] * B[h*n + j];
       }
   C[i*n + j] = sum1;
-  C[(i+1)*n + j] = sum2;
+  if (i+1 < m) C[(i+1)*n + j] = sum2;
   }
 }
 
@@ -43,7 +43,7 @@ __global__ void m3_2(int m, int n, int k, double *A, double *B, double *C) {
   if (i < m && j < n){
       for (int h = 0; h < k; h++) {
         sum1 += A[i*k + h] * B[h*n + j];
-        sum2 += A[i*k + h] * B[h*n + j+1];
+        if (j+1 < n) sum2 += A[i*k + h] * B[h*n + j+1];
       }
   C[i*n + j] = sum1;
   if (j+1 < n) C[i*n + j + 1] = sum2;
@@ -59,10 +59,10 @@ __global__ void m3_3(int m, int n, int k, double *A, double *B, double *C) {
   if (i < m && j < n){
       for (int h = 0; h < k; h++) {
         sum1 += A[i*k + h] * B[h*n + j];
-        sum2 += A[(i+blockDim.x)*k + h] * B[h*n + j];
+        if (i+blockDim.x < n) sum2 += A[(i+blockDim.x)*k + h] * B[h*n + j];
       }
   C[i*n + j] = sum1;
-  C[(i+blockDim.x)*n + j] = sum2;
+  if (i+blockDim.x < n) C[(i+blockDim.x)*n + j] = sum2;
   }
 }
 
