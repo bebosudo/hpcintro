@@ -35,6 +35,7 @@ __global__ void m5(int m, int n, int k, double *A, double *B, double *C) {
     // mult on the small matrices cannot work.
     const int bl_side = blockDim.x;
     double sum;
+
     for (int w=0; w < k/bl_side; w++) {
 
         // We have to iterate over the two lines until reaching k.
