@@ -45,7 +45,7 @@ __global__ void m5(int m, int n, int k, double *A, double *B, double *C) {
         A_s[threadIdx.y*bl_side + threadIdx.x] = A[topleft_row_A_curr_block + threadIdx.y*k + threadIdx.x];
         // We just need each thread to load a single cell from the huge matrix
         // A & B, no matter if they don't load the same they are going to work on.
-        B_s[threadIdx.x*bl_side + threadIdx.y] = B[topleft_col_B_curr_block + threadIdx.x*k + threadIdx.y];
+        B_s[threadIdx.y*bl_side + threadIdx.x] = B[topleft_col_B_curr_block + threadIdx.y*k + threadIdx.x];
 
         __syncthreads();
 
