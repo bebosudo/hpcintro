@@ -43,20 +43,14 @@ __global__ void m4_2(int m, int n, int k, double *A, double *B, double *C) {
   if (i < m && j < n){
       for (int h = 0; h < k; h++) {
         sum1 += A[i*k + h] * B[h*n + j];
-        //if (i+1 < m)
-        sum2 += A[(i+1)*k + h] * B[h*n + j];
-        //if (i+2 < m)
-         sum3 += A[(i+2)*k + h] * B[h*n + j];
-        //if (i+3 < m)
-        sum4 += A[(i+3)*k + h] * B[h*n + j];
+        if (i+1 < m) sum2 += A[(i+1)*k + h] * B[h*n + j];
+        if (i+2 < m) sum3 += A[(i+2)*k + h] * B[h*n + j];
+        if (i+3 < m) sum4 += A[(i+3)*k + h] * B[h*n + j];
       }
   C[i*n + j] = sum1;
-  if (i+1 < m)
-   C[(i+1)*n + j] = sum2;
-  if (i+2 < m)
-  C[(i+2)*n + j] = sum3;
-  if (i+3 < m)
-  C[(i+3)*n + j] = sum4;
+  if (i+1 < m) C[(i+1)*n + j] = sum2;
+  if (i+2 < m) C[(i+2)*n + j] = sum3;
+  if (i+3 < m) C[(i+3)*n + j] = sum4;
   }
 }
 
@@ -75,8 +69,8 @@ extern "C" {
         // Initialize the output matrix with zeroes.
         cudaMemset(d_C, 0, m*n * sizeof(double));
         dim3 BlockDim(16,16);
-        dim3 NumBlocks((((m-1)+1)-1)/16+1,(((n-1)/4+1)-1)/16+1);
-        m4_1<<<NumBlocks,BlockDim>>>(m, n, k, d_A, d_B, d_C);
+        dim3 NumBlocks((((m-1)/4+1)-1)/16+1,(((n-1)+1)-1)/16+1);
+        m4_2<<<NumBlocks,BlockDim>>>(m, n, k, d_A, d_B, d_C);
         checkCudaErrors(cudaDeviceSynchronize());
 
         cudaMemcpy(C, d_C, m*n * sizeof(double), cudaMemcpyDeviceToHost);
