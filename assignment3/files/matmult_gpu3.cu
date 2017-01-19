@@ -36,17 +36,21 @@ __global__ void m3_1(int m, int n, int k, double *A, double *B, double *C) {
 //Version 2: second element right neighbor
 __global__ void m3_2(int m, int n, int k, double *A, double *B, double *C) {
 
-  double sum1 = 0,sum2 = 0;
+  double sum1 = 0,sum2 = 0, sum3 = 0; sum4 = 0;
   int i = blockIdx.x*blockDim.x+threadIdx.x;
   int j = blockIdx.y*blockDim.y+threadIdx.y;
-  j *= 2;
+  j *= 4;
   if (i < m && j < n){
       for (int h = 0; h < k; h++) {
         sum1 += A[i*k + h] * B[h*n + j];
         if (j+1 < n) sum2 += A[i*k + h] * B[h*n + j+1];
+        if (j+2 < n) sum3 += A[i*k + h] * B[h*n + j+2];
+        if (j+3 < n) sum4 += A[i*k + h] * B[h*n + j+3];
       }
   C[i*n + j] = sum1;
   if (j+1 < n) C[i*n + j + 1] = sum2;
+  if (j+2 < n) C[i*n + j + 2] = sum3;
+  if (j+3 < n) C[i*n + j + 3] = sum4;
   }
 }
 
@@ -81,7 +85,7 @@ extern "C" {
         // Initialize the output matrix with zeroes.
         cudaMemset(d_C, 0, m*n * sizeof(double));
         dim3 BlockDim(16,16);
-        dim3 NumBlocks((m-1)/16+1,((n/2-1)/16+1));
+        dim3 NumBlocks((m-1)/16+1,((n/4-1)/16+1));
 
         double time = omp_get_wtime();
         m3_2<<<NumBlocks,BlockDim>>>(m, n, k, d_A, d_B, d_C);
