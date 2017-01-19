@@ -46,8 +46,7 @@ __global__ void m3_2(int m, int n, int k, double *A, double *B, double *C) {
         sum2 += A[i*k + h] * B[h*n + j+1];
       }
   C[i*n + j] = sum1;
-  //if (j+1 < n)
-   C[i*n + j + 1] = sum2;
+  if (j+1 < n) C[i*n + j + 1] = sum2;
   }
 }
 
