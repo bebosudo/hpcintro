@@ -1,6 +1,13 @@
 TARGET	= libmatmult.so
 LIBSRCS	=
+<<<<<<< HEAD
 LIBOBJS	= matmult_gpu1.o matmult_gpu2.o matmult_gpu3.o matmult_gpu4.o matmult_gpu5.o matmult_gpu6.o  matmult_lib.o
+=======
+LIBOBJS	= matmult_lib.o  matmult_gpu1.o matmult_gpu2.o \
+		  matmult_gpu3.o matmult_gpu4.o matmult_gpu5.o \
+		  matmult_gpulib.o 
+
+>>>>>>> d22b1a6786a8bfa30ccb49739c583cb15466649b
 
 OPT	= -g
 PIC = -fpic
@@ -19,12 +26,10 @@ SOFLAGS = -shared
 XLIBS	= -lcublas
 
 $(TARGET): $(LIBOBJS)
-	# module load gcc/5.3.0 cuda/8.0
 	$(CXX) -o $@ $(CXXFLAGS) $(SOFLAGS) $(INCLUDES) $^ $(XLIBS)
 
 .SUFFIXES: .cu
 .cu.o:
-	# module load gcc/5.3.0 cuda/8.0
 	$(CXX) -o $*.o -c $*.cu $(CXXFLAGS) $(SOFLAGS) $(INCLUDES)
 
 clean:
