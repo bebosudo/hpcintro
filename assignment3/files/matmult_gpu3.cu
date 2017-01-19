@@ -14,7 +14,8 @@
 //  m |    A   |   X    k  |    B   |  =    m  |   C   |
 //    |        |           |        |          |       |
 //    ---------            ---------           ---------
-
+#include <stdio.h>
+#include <omp.h>
 //Version 1: second element below neighbor
 __global__ void m3_1(int m, int n, int k, double *A, double *B, double *C) {
 
@@ -45,7 +46,7 @@ __global__ void m3_2(int m, int n, int k, double *A, double *B, double *C) {
         sum2 += A[i*k + h] * B[h*n + j+1];
       }
   C[i*n + j] = sum1;
-  C[i*n + j + 1] = sum2;
+  if (j+1 < n) C[i*n + j + 1] = sum2;
   }
 }
 
@@ -68,6 +69,7 @@ __global__ void m3_3(int m, int n, int k, double *A, double *B, double *C) {
 extern "C" {
     void matmult_gpu3(int m, int n, int k, double *A, double *B, double *C) {
         double* d_A, * d_B, * d_C;
+        cudaSetDevice(2);
         cudaMalloc((void**)&d_A, m*k * sizeof(double));
         cudaMalloc((void**)&d_B, k*n * sizeof(double));
         cudaMalloc((void**)&d_C, m*n * sizeof(double));
@@ -79,9 +81,14 @@ extern "C" {
         // Initialize the output matrix with zeroes.
         cudaMemset(d_C, 0, m*n * sizeof(double));
         dim3 BlockDim(16,16);
-        dim3 NumBlocks((m/2-1)/16+1,((n-1)/16+1));
-        m3_3<<<NumBlocks,BlockDim>>>(m, n, k, d_A, d_B, d_C);
+        dim3 NumBlocks((m-1)/16+1,((n/2-1)/16+1));
+
+        double time = omp_get_wtime();
+        m3_2<<<NumBlocks,BlockDim>>>(m, n, k, d_A, d_B, d_C);
         cudaDeviceSynchronize();
+        double elapsed1 = omp_get_wtime() - time;
+
+        printf("Kernel: %lf s\n",elapsed1);
 
         cudaMemcpy(C, d_C, m*n * sizeof(double), cudaMemcpyDeviceToHost);
 
