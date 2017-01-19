@@ -15,7 +15,7 @@
 //    |        |           |        |          |       |
 //    ---------            ---------           ---------
 
-__global__ void m4(int m, int n, int k, double *A, double *B, double *C) {
+__global__ void m4_1(int m, int n, int k, double *A, double *B, double *C) {
   double sum1 = 0, sum2 = 0, sum3 = 0, sum4 = 0;
   int i = blockIdx.x*blockDim.x+threadIdx.x;
   int j = blockIdx.y*blockDim.y+threadIdx.y;
@@ -34,6 +34,25 @@ __global__ void m4(int m, int n, int k, double *A, double *B, double *C) {
   }
 }
 
+
+__global__ void m4_2(int m, int n, int k, double *A, double *B, double *C) {
+  double sum1 = 0, sum2 = 0, sum3 = 0, sum4 = 0;
+  int i = blockIdx.x*blockDim.x+threadIdx.x;
+  int j = blockIdx.y*blockDim.y+threadIdx.y;
+  i *= 4;
+  if (i < m && j < n){
+      for (int h = 0; h < k; h++) {
+        sum1 += A[i*k + h] * B[h*n + j];
+        sum2 += A[(i+1)*k + h] * B[h*n + j];
+        sum3 += A[(i+2)*k + h] * B[h*n + j];
+        sum4 += A[(i+3)*k + h] * B[h*n + j];
+      }
+  C[i*n + j] = sum1;
+  C[(i+1)*n + j] = sum2;
+  C[(i+2)*n + j] = sum3;
+  C[(i+3)*n + j] = sum4;
+  }
+}
 
 extern "C" {
     void matmult_gpu4(int m, int n, int k, double *A, double *B, double *C) {
