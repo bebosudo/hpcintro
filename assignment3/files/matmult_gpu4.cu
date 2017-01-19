@@ -63,6 +63,7 @@ __global__ void m4_2(int m, int n, int k, double *A, double *B, double *C) {
 extern "C" {
     void matmult_gpu4(int m, int n, int k, double *A, double *B, double *C) {
         double* d_A, * d_B, * d_C;
+        cudaSetDevice(2);
         cudaMalloc((void**)&d_A, m*k * sizeof(double));
         cudaMalloc((void**)&d_B, k*n * sizeof(double));
         cudaMalloc((void**)&d_C, m*n * sizeof(double));
