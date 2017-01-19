@@ -85,7 +85,7 @@ extern "C" {
         dim3 NumBlocks((m-1)/16+1,((n/2-1)/16+1));
 
         double time = omp_get_wtime();
-        m3_1<<<NumBlocks,BlockDim>>>(m, n, k, d_A, d_B, d_C);
+        m3_2<<<NumBlocks,BlockDim>>>(m, n, k, d_A, d_B, d_C);
         cudaDeviceSynchronize();
         double elapsed1 = omp_get_wtime() - time;
 
