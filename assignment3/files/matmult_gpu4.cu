@@ -29,8 +29,8 @@ __global__ void m4_1(int m, int n, int k, double *A, double *B, double *C) {
       }
   C[i*n + j] = sum1;
   C[i*n + j+1] = sum2;
-  C[i*n + j+2] = sum3;
-  C[i*n + j+3] = sum4;
+  if (j+2 < n) C[i*n + j+2] = sum3;
+  if (j+2 < n) C[i*n + j+3] = sum4;
   }
 }
 
@@ -49,8 +49,8 @@ __global__ void m4_2(int m, int n, int k, double *A, double *B, double *C) {
       }
   C[i*n + j] = sum1;
   C[(i+1)*n + j] = sum2;
-  C[(i+2)*n + j] = sum3;
-  C[(i+3)*n + j] = sum4;
+  if (i+3 < m) C[(i+2)*n + j] = sum3;
+  if (i+3 < m) C[(i+3)*n + j] = sum4;
   }
 }
 
