@@ -1,3 +1,5 @@
+#include <stdio.h>
+
 // Write a first sequential implementation (matmult gpu1()) of matrix multiplication on the
 // GPU that uses only a single thread. It should work for all matrix sizes. Hints:
 // – You need CUDA code to allocate memory on the GPU, transfer A and B to the
@@ -17,9 +19,6 @@
 
 
 __global__ void m5(int m, int n, int k, double *A, double *B, double *C) {
-    int i = blockIdx.x*blockDim.x + threadIdx.x;
-    int j = blockIdx.y*blockDim.y + threadIdx.y;
-
     // This variable 'two_blocks' (the name can be changed to whatever) comes
     // from the kernel invocation, and we have to "split" it manually into the
     // two variables we want to use.
@@ -29,20 +28,38 @@ __global__ void m5(int m, int n, int k, double *A, double *B, double *C) {
     __shared__ double* B_s;
     B_s = &two_blocks[blockDim.x*blockDim.y];
 
-    if (i < m && j < n) {
-        A_s[threadIdx.y*blockDim.x + threadIdx.x] = A[i*n + j];
-        B_s[threadIdx.x*blockDim.y + threadIdx.y] = B[i*n + j];
+    int topleft_row_A = blockIdx.y*k;
+    int topleft_col_B = blockIdx.x*blockDim.x;
+
+    // The blocks HAVE to have the same size, otherwise this matrix-matrix 
+    // mult on the small matrices cannot work.
+    const int bl_side = blockDim.x;
+    double sum;
+    for (int w=0; w < k/bl_side; w++) {
+
+        // We have to iterate over the two lines until reaching k.
+        int topleft_row_A_curr_block = topleft_row_A + w*bl_side;
+        int topleft_col_B_curr_block = topleft_col_B + w*bl_side*n;
+
+        A_s[threadIdx.y*bl_side + threadIdx.x] = A[topleft_row_A_curr_block + threadIdx.y*k + threadIdx.x];
+        // We just need each thread to load a single cell from the huge matrix
+        // A & B, no matter if they don't load the same they are going to work on.
+        B_s[threadIdx.y*bl_side + threadIdx.x] = B[topleft_col_B_curr_block + threadIdx.y*k + threadIdx.x];
 
         __syncthreads();
 
-        int ii = threadIdx.y;
-        int jj = threadIdx.x;
-        double sum = 0.0;
-
-        for (int h = 0; h < blockDim.y; h++) {
-            sum += A_s[ii*blockDim.y + h] * B_s[h*n + jj];
+        sum = 0.0;
+        for (int it=0; it < bl_side; it++) {
+            sum += ( A_s[threadIdx.y*bl_side + it] * B_s[bl_side*it + threadIdx.x] );
         }
-        C[i*n + j] += sum;
+
+        // This second barrier syncronization is needed bz there could be some
+        // threads that could repeat the w_for loop and change A_s and B_s 
+        // while other are still reading from them.
+        __syncthreads();
+
+        C[topleft_row_A_curr_block*n + topleft_col_B_curr_block + threadIdx.y*n + threadIdx.x] += sum;
+
     }
 }
 
@@ -61,7 +78,8 @@ extern "C" {
         // Initialize the output matrix with zeroes.
         cudaMemset(d_C, 0, m*n * sizeof(double));
 
-        dim3 blockDim(16,16);
+        int bs = 16;
+        dim3 blockDim(bs, bs);
         dim3 gridDim( (m-1)/blockDim.x+1, (n-1)/blockDim.y+1 );
 
 

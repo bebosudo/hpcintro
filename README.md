@@ -4,7 +4,7 @@ Course n. 02614 held by Prof. Bernd Dammann, at the Denmark Technical University
 Webpage of the course: http://kurser.dtu.dk/course/02614.
 
 
-## Week 1: Tuning
+## Week 1: Tuning towards increasing performances
 1. **[2017-01-02]:** Introduction to Makefile, plotting tools, HPC basis with some exercises.
 2. **[2017-01-03]:** Tuning C and Fortran programs; some specific compiler options to speed up programs and some analyzing tools.
 3. **[2017-01-04]:** Tuning on serial programs and start working on the first assignment.
