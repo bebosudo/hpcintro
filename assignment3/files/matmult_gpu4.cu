@@ -19,7 +19,7 @@ __global__ void m4(int m, int n, int k, double *A, double *B, double *C) {
   double sum1 = 0, sum2 = 0, sum3 = 0, sum4 = 0;
   int i = blockIdx.x*blockDim.x+threadIdx.x;
   int j = blockIdx.y*blockDim.y+threadIdx.y;
-  i *= 4;
+  j *= 4;
   if (i < m && j < n){
       for (int h = 0; h < k; h++) {
         sum1 += A[i*k + h] * B[h*n + j];
