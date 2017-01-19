@@ -14,7 +14,7 @@
 //  m |    A   |   X    k  |    B   |  =    m  |   C   |
 //    |        |           |        |          |       |
 //    ---------            ---------           ---------
-
+#include <helper_cuda.h>
 __global__ void m4_1(int m, int n, int k, double *A, double *B, double *C) {
   double sum1 = 0, sum2 = 0, sum3 = 0, sum4 = 0;
   int i = blockIdx.x*blockDim.x+threadIdx.x;
