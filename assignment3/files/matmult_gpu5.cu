@@ -28,7 +28,7 @@ __global__ void m5(int m, int n, int k, double *A, double *B, double *C) {
     __shared__ double* B_s;
     B_s = &two_blocks[blockDim.x*blockDim.y];
 
-    int topleft_row_A = blockIdx.y*k;
+    int topleft_row_A = blockIdx.y*blockDim.y*k;
     int topleft_col_B = blockIdx.x*blockDim.x;
 
     // The blocks HAVE to have the same size, otherwise this matrix-matrix 
@@ -36,11 +36,11 @@ __global__ void m5(int m, int n, int k, double *A, double *B, double *C) {
     const int bl_side = blockDim.x;
     double sum;
 
-    for (int w=0; w < k/bl_side; w++) {
+    for (int w = 0; w < k; w += bl_side) {
 
         // We have to iterate over the two lines until reaching k.
-        int topleft_row_A_curr_block = topleft_row_A + w*bl_side;
-        int topleft_col_B_curr_block = topleft_col_B + w*bl_side*n;
+        int topleft_row_A_curr_block = topleft_row_A + w;
+        int topleft_col_B_curr_block = topleft_col_B + w*n;
 
         A_s[threadIdx.y*bl_side + threadIdx.x] = A[topleft_row_A_curr_block + threadIdx.y*k + threadIdx.x];
         // We just need each thread to load a single cell from the huge matrix
@@ -54,12 +54,13 @@ __global__ void m5(int m, int n, int k, double *A, double *B, double *C) {
             sum += ( A_s[threadIdx.y*bl_side + it] * B_s[bl_side*it + threadIdx.x] );
         }
 
-        // This second barrier syncronization is needed bz there could be some
-        // threads that could repeat the w_for loop and change A_s and B_s 
+        // This second barrier syncronization is needed because there could be
+        // some threads that could repeat the w_for loop and change A_s and B_s
         // while other are still reading from them.
         __syncthreads();
 
-        C[topleft_row_A_curr_block*n + topleft_col_B_curr_block + threadIdx.y*n + threadIdx.x] += sum;
+        // C[topleft_row_A_curr_block*n + topleft_col_B_curr_block + threadIdx.y*n + threadIdx.x] += sum;
+        C[blockIdx.y*blockDim.y*n + threadIdx.y*n + blockIdx.x*blockDim.x + threadIdx.x] += sum;
 
     }
 }
@@ -76,7 +77,7 @@ extern "C" {
         cudaMemcpy(d_A, A, m*k * sizeof(double), cudaMemcpyHostToDevice);
         cudaMemcpy(d_B, B, k*n * sizeof(double), cudaMemcpyHostToDevice);
 
-        // Initialize the output matrix with zeroes.
+        // Initialize the output C matrix with zeroes.
         cudaMemset(d_C, 0, m*n * sizeof(double));
 
         int bs = 16;
