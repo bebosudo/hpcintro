@@ -80,7 +80,7 @@ extern "C" {
         cudaMemset(d_C, 0, m*n * sizeof(double));
         dim3 BlockDim(16,16);
         dim3 NumBlocks((m/2-1)/16+1,((n-1)/16+1));
-        m3_3<<<NumBlocks,BlockDim>>>(m, n, k, d_A, d_B, d_C);
+        m3_1<<<NumBlocks,BlockDim>>>(m, n, k, d_A, d_B, d_C);
         cudaDeviceSynchronize();
 
         cudaMemcpy(C, d_C, m*n * sizeof(double), cudaMemcpyDeviceToHost);
