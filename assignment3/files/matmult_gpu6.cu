@@ -15,7 +15,7 @@
 //    |        |           |        |          |       |
 //    ---------            ---------           ---------
 
-__global__ void m2(int m, int n, int k, double *A, double *B, double *C) {
+__global__ void m6(int m, int n, int k, double *A, double *B, double *C) {
 
   int i = blockIdx.x*blockDim.x+threadIdx.x;
   int j = blockIdx.y*blockDim.y+threadIdx.y;
@@ -36,7 +36,7 @@ __global__ void m2(int m, int n, int k, double *A, double *B, double *C) {
 
 
 extern "C" {
-    void matmult_gpu2(int m, int n, int k, double *A, double *B, double *C) {
+    void matmult_gpu6(int m, int n, int k, double *A, double *B, double *C) {
         double* d_A, * d_B, * d_C;
         cudaMalloc((void**)&d_A, m*k * sizeof(double));
         cudaMalloc((void**)&d_B, k*n * sizeof(double));
