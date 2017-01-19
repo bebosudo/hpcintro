@@ -32,15 +32,15 @@ int main(int argc, char * argv[]){
 		u1[i*M] = 20;
 		u1[(N+1)+i*M] = 20;
 		u1[i] = 20;
-		for (int i = 2*M/3; i <= 5*M/6; i++){
-			for (int j = M/2; j <= 2*M/3; j++){
-				f[i*M+j] = 200;
-			}
+	}
+
+	for (int i = 2*M/3; i <= 5*M/6; i++){
+		for (int j = M/2; j <= 2*M/3; j++){
+			f[i*M+j] = 200;
 		}
 	}
 
 	double *d_u1, *d_u2, *d_f;
-
 	
 	cudaMalloc( (void**)&d_u1, size);
 	cudaMalloc( (void**)&d_u2, size);
@@ -59,13 +59,13 @@ int main(int argc, char * argv[]){
 	ts = omp_get_wtime();
 	for(int k = 0; k<kmax; k++){
 		jacobi<<<dimGrid,dimBlock>>>(d_u1,d_u2,d_f,N,lambda2);
-		cudaDeviceSynchronize();
-	
 		jacobi<<<dimGrid,dimBlock>>>(d_u2,d_u1,d_f,N,lambda2);
-		cudaDeviceSynchronize();
 	}
+	cudaDeviceSynchronize();
 	te = omp_get_wtime() - ts;
-
+	
+	printf("%s\n", cudaGetErrorString(cudaGetLastError()));
+	
 	cudaMemcpy( u1, d_u1, size, cudaMemcpyDeviceToHost );
 	
 	printf("Time: %4.3lf s\n", te);
