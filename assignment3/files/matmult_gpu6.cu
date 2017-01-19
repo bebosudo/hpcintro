@@ -26,7 +26,7 @@ __global__ void m6(int m, int n, int k, double *A, double *B, double *C) {
   if (i < m && j < n){
     for (int w = 0; w < k; w += blockDim.x){
       A_s[threadIdx.x*blockDim.y + threadIdx.y] = A[blockIdx.x*blockDim.x*k+threadIdx.x*k+threadIdx.y+w];
-      B_s[threadIdx.y*blockDim.x + threadIdx.x] = B[blockIdx.y*blockDim.y+threadIdx.y*n+threadIdx.x+w*n];
+      B_s[threadIdx.y*blockDim.x + threadIdx.x] = B[blockIdx.y*blockDim.y+threadIdx.x*n+threadIdx.y+w*n];
       for (int h = 0; h < blockDim.x; h++) {
         C[i*n + j] += A_s[ii*blockDim.x + h] * B_s[h*blockDim.x + jj];
       }
