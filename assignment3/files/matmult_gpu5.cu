@@ -88,7 +88,7 @@ extern "C" {
         // https://devblogs.nvidia.com/parallelforall/using-shared-memory-cuda-cc/
         // dynamically "pass" the shared memory to the kernel function.
         // Otherwise we should place some constants in the kernel function.
-        m5<<<gidDim, blockDim, (blockDim.x*blockDim.y * 2 * sizeof(double))>>>(m, n, k, d_A, d_B, d_C);
+        m5<<<gridDim, blockDim, (blockDim.x*blockDim.y * 2 * sizeof(double))>>>(m, n, k, d_A, d_B, d_C);
         cudaDeviceSynchronize();
 
         cudaMemcpy(C, d_C, m*n * sizeof(double), cudaMemcpyDeviceToHost);
