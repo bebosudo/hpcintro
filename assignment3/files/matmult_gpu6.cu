@@ -19,10 +19,17 @@ __global__ void m2(int m, int n, int k, double *A, double *B, double *C) {
 
   int i = blockIdx.x*blockDim.x+threadIdx.x;
   int j = blockIdx.y*blockDim.y+threadIdx.y;
-
+  __shared__ double A_s[16*16];
+  __shared__ double B_s[16*16];
+  int ii = threadIdx.x;
+  int jj = threadIdy.y;
   if (i < m && j < n){
-    for (int h = 0; h < k; h++) {
-      C[i*n + j] += A[i*k + h] * B[h*n + j];
+    for (int w = 0; w < k; w += blockDim.x){
+      A_s[threadIdx.x*blockDim.y + threadIdx.y] = A[blockDim.x*k+threadIdx.x*k+threadIdx.y+w];
+      B_s[threadIdx.x*blockDim.y + threadIdx.y] = B[blockIdx.x*blockDim.y+threadIdx.x*n+threadIdx.y+w*n];
+      for (int h = 0; h < blockDim.x; h++) {
+        C[i*n + j] += A_s[ii*blockDim.x + h] * B_s[h*blockDim.x + jj];
+      }
     }
   }
 }
