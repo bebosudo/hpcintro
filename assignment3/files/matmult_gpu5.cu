@@ -30,12 +30,12 @@ __global__ void m5(int m, int n, int k, double *A, double *B, double *C) {
     B_s = &two_blocks[blockDim.x*blockDim.y];
 
     if (i < m && j < n) {
-        A_s[threadIdx.y*blockDim.x + threadIdx.x] = A[i*n + j];
-        B_s[threadIdx.x*blockDim.y + threadIdx.y] = B[i*n + j];
+        A_s[threadIdx.x*blockDim.y + threadIdx.y] = A[i*n + j];
+        B_s[threadIdx.y*blockDim.x + threadIdx.x] = B[i*n + j];
 
         __syncthreads();
 
-        int ii = threadIdx.y;
+        int ii = threadIdx.x;
         int jj = threadIdx.x;
         double sum = 0.0;
 
