@@ -14,7 +14,6 @@
 //  m |    A   |   X    k  |    B   |  =    m  |   C   |
 //    |        |           |        |          |       |
 //    ---------            ---------           ---------
-#include <helper_cuda.h>
 __global__ void m6(int m, int n, int k, double *A, double *B, double *C) {
   double sum;
   int i = blockIdx.x*blockDim.x+threadIdx.x;
@@ -31,7 +30,7 @@ __global__ void m6(int m, int n, int k, double *A, double *B, double *C) {
   const int blockdim = blockDim.x;
 
   for (int w = 0; w < k; w += blockDim.x){
-      sum = 0;
+      sum = 0.0;
       A_s[ii*blockdim + jj] = A[i*k+jj+w];
       B_s[ii*blockdim + jj] = B[j+ii*n+w*n];
     __syncthreads();
@@ -47,6 +46,7 @@ __global__ void m6(int m, int n, int k, double *A, double *B, double *C) {
 extern "C" {
     void matmult_gpu6(int m, int n, int k, double *A, double *B, double *C) {
         double* d_A, * d_B, * d_C;
+        cudaSetDevice(2);
         cudaMalloc((void**)&d_A, m*k * sizeof(double));
         cudaMalloc((void**)&d_B, k*n * sizeof(double));
         cudaMalloc((void**)&d_C, m*n * sizeof(double));
