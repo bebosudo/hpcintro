@@ -24,7 +24,7 @@
 
 # here follow the commands you want to execute
 
-for N in 16 32 64 128 256 512 1024 2048 4096 8192
+for N in 16 32 64 128 256 512 1024 2048 4096 8192 16384
 do
-	OMP_NUM_THREADS=8 ./3_omp_jacobi $N 100
+	OMP_NUM_THREADS=8 ./3_omp_jacobi $N 200
 done
