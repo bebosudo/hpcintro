@@ -29,7 +29,6 @@ __global__ void m6(int m, int n, int k, double *A, double *B, double *C) {
   int ii = threadIdx.x;
   int jj = threadIdx.y;
   for (int w = 0; w <= k+blockDim.x; w += blockDim.x){
-    if (ii+w < m & jj+w < n){
       sum = 0;
       A_s[ii*blockDim.y + jj] = A[i*k+jj+w];
       B_s[ii*blockDim.y + jj] = B[j+ii*n+w*n];
@@ -39,7 +38,6 @@ __global__ void m6(int m, int n, int k, double *A, double *B, double *C) {
       }
       __syncthreads();
       C[i*n + j] += sum;
-    }
   }
 }
 
