@@ -20,8 +20,8 @@
 #BSUB -N
 ### -- Specify the output and error file. %J is the job-id --
 ### -- -o and -e mean append, -oo and -eo mean overwrite --
-#BSUB -o gpu-TYPE-%J.out
-#BSUB -e gpu_%J.err
+#BSUB -o gpu-ALL-%J.out
+#BSUB -e gpu-ALL-%J.err
 
 # -- end of LSF options --
 
@@ -36,15 +36,21 @@ module load cuda/8.0
 #
 
 declare -A size_its
-size_its=( [512]=1 [1024]=1 [2048]=1 [4096]=1 [8192]=1 [10240]=1 )
-
+size_its=( [512]=100 [1024]=10 [2048]=1 [4096]=1 [8192]=1 [10240]=1 )
 
 # change TYPE also in the output file accordingly!!!
 # gpu1 (the 1-thread sequential version) takes a lot of time (and usually is 
-# killed by the walltime), so it should be sent separately.
-for method in TYPE # gpu1 gpu2 gpu3 gpu4 gpulib # 'gpu5' not working yet. The 'lib' version has to be sent on the CPU cluster nodes, with the other submitter, not on this GPU cluster.
+# killed by the walltime), so we need to reduce the sizes to make it work on.
+# 
+# for size in 512 1024 #2048 4096 8192 #10240
+# do
+#     printf "gpu1 "
+#     MFLOPS_MAX_IT=${size_its[${size}]} MATMULT_COMPARE=0 ./matmult_f.nvcc2 gpu1 $size $size $size
+# done
+
+for method in gpu2 gpu3 gpu4 gpulib # 'gpu5' not working yet. The 'lib' version has to be sent on the CPU cluster nodes, with the other submitter, not on this GPU cluster.
 do
-    for size in 512 1024 2048 4096 #8192 #10240
+    for size in 512 1024 2048 4096 8192 #10240
     do
         printf "${method} "
         MFLOPS_MAX_IT=${size_its[${size}]} MATMULT_COMPARE=0 ./matmult_f.nvcc2 $method $size $size $size
