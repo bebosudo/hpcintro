@@ -55,6 +55,6 @@ do
     for size in 1600 #10240
     do
         printf "${method} "
-        MFLOPS_MAX_IT=${size_its[${size}]} MATMULT_COMPARE=0 ./matmult_f.nvcc2 $method $size $size $size
+        MFLOPS_MAX_IT=1 MATMULT_COMPARE=0 nvprof --metrics flops_dp ./matmult_f.nvcc2 $method $size $size $size
     done
 done
