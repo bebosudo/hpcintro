@@ -29,7 +29,7 @@ __global__ void m6(int m, int n, int k, double *A, double *B, double *C) {
   int jj = threadIdx.y;
   const int blockdim = blockDim.x;
 
-  for (int w = 0; w < k; w += blockDim.x){
+  for (int w = 0; w < k; w += blockdim){
       sum = 0.0;
       A_s[ii*blockdim + jj] = A[i*k+jj+w];
       B_s[ii*blockdim + jj] = B[j+ii*n+w*n];
