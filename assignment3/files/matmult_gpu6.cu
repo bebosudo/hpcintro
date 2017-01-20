@@ -23,17 +23,19 @@ __global__ void m6(int m, int n, int k, double *A, double *B, double *C) {
   __shared__ double B_s[16*16];
   int ii = threadIdx.x;
   int jj = threadIdx.y;
-    for (int w = 0; w < k; w += blockDim.x){
-      sum = 0;
-      A_s[ii*blockDim.y + jj] = A[i*k+jj+w];
-      B_s[ii*blockDim.y + jj] = B[j+ii*n+w*n];
-      __syncthreads();
+  for (int w = 0; w <= k+blockDim.x; w += blockDim.x){
+    sum = 0;
+    A_s[ii*blockDim.y + jj] = A[i*k+jj+w];
+    B_s[ii*blockDim.y + jj] = B[j+ii*n+w*n];
+    __syncthreads();
+    if (ii+w < m & jj+w < n){
       for (int h = 0; h < blockDim.x; h++) {
         sum += A_s[ii*blockDim.x + h] * B_s[h*blockDim.x + jj];
       }
       __syncthreads();
       C[i*n + j] += sum;
     }
+  }
 }
 
 
