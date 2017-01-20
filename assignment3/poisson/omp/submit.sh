@@ -10,21 +10,21 @@
 #PBS -q hpcintro
 #PBS -l nodes=1:ppn=20
 #PBS -l walltime=1:00:00
-OUTFILE=3.3.no_fast.txt
+OUTFILE=omp.txt
 #PBS -o $OUTFILE
 
 cd $PBS_O_WORKDIR
 
 module load studio > /dev/null
 
-EXECUTABLE=3_omp_jacobi_no_fast
+EXECUTABLE=3_omp_jacobi
 ITERATIONS_MAX=100  # we use a small number of iterations in order to make the
                     # program hit the stopping criterion, we don't need it to
                     # reach the end of the whole calculation.
-THRESHOLD=0.001
+THRESHOLD=0.0000001
 
 # The N value 1260 is due to the comparison with the Mandelbrot function.
-for N in 128 256 512 1024 1260 2048 4096 8192 10000
+for N in 16 32 64 128 256 512 1024 2048 4096 8192
 do
     for num_th in 8
     do

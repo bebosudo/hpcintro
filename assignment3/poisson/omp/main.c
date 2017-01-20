@@ -4,17 +4,16 @@
 
 void
 jacobi(double * unew, double * uold, double * f,
-      double lambda, int N, int kmax, double treshold, int * k);
+      double lambda, int N, int kmax, int * k);
 
 int main(int argc, char * argv[]){
-  if (argc != 4){
-    printf("Wrong number of argument (N kmax treshold)");
+  if (argc != 3){
+    printf("Wrong number of argument (N kmax)");
     return -1;
   }
   int N = atoi(argv[1]);
   int kmax = atoi(argv[2]);
   double lambda = (double)2/(N+2);
-  double treshold = atof(argv[3]);
   double * unew =(double *)calloc((N+2)*(N+2),sizeof(double));
   if (unew == NULL){
     printf("Memory allocation failed");
@@ -37,18 +36,20 @@ int main(int argc, char * argv[]){
     unew[i*(N+2)] = 20;
     unew[(N+1)+i*(N+2)] = 20;
     unew[i] = 20;
-    int M = N+2;
+  }
+
+  int M = N+2;
   for (int i = 2*M/3; i <= 5*M/6; i++){
     for (int j = M/2; j <= 2*M/3; j++){
       f[i*(N+2)+j] = 200;
     }
   }
-  }
+
   double ts, te;
   ts = omp_get_wtime();
   int k = 0;
 
-  jacobi(unew,uold,f,lambda,N,kmax,treshold,&k);
+  jacobi(unew,uold,f,lambda,N,kmax,&k);
   
 
   te = omp_get_wtime() - ts;
@@ -65,6 +66,6 @@ int main(int argc, char * argv[]){
 //    }
 //    fprintf(fp1,"\n");
 //  }
-  printf("%d %d %lf %lf\n",N,k,te,(double)k/te);
+  printf("%d %d %lf\n",N,k,te);
   return 0;
 }

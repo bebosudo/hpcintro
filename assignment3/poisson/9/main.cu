@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <omp.h>
 
+#define PRINT 1
+
 __global__ void jacobi(double * uold, double * unew, double * f, int width, int height, double lambda2);
 
 int main(int argc, char * argv[]){
@@ -107,9 +109,10 @@ int main(int argc, char * argv[]){
 	cudaMemcpy(u1, d0_u1, HALF*sizeof(double), cudaMemcpyDeviceToHost );
 	cudaMemcpy(&u1[HALF], &d1_u1[M], (M*M - HALF)*sizeof(double), cudaMemcpyDeviceToHost );
 
-	printf("%s\n", cudaGetErrorString(cudaGetLastError()));
-	printf("Time: %4.3lf s\n", te);
+	fprintf(stderr,"%s\n", cudaGetErrorString(cudaGetLastError()));
+	printf("%d %d %lf\n",N,kmax,te);
 
+	#if PRINT
 	FILE *fp1 = fopen("results.txt","w");
 	if (fp1 == NULL) {
 		printf("Error opening file\n");
@@ -122,6 +125,7 @@ int main(int argc, char * argv[]){
 		}
 		fprintf(fp1,"\n");
 	}
+	#endif
 
 	cudaFree(d0_u1);
 	cudaFree(d0_u2);

@@ -37,7 +37,7 @@ module load cuda/8.0
 
 /appl/cuda/8.0/samples/1_Utilities/deviceQuery/deviceQuery > deviceQuery.txt
 
-for N in 16 32 64 128 256 512 1024 2048 4096 8192
+for N in 16 32 64 128 256 512 1024 2048 4096 8192 16384
 do
 	./poisson $N 100
 done
