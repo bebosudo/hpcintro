@@ -27,16 +27,14 @@ __global__ void m6(int m, int n, int k, double *A, double *B, double *C) {
 
   int ii = threadIdx.x;
   int jj = threadIdx.y;
-
-  const int bl_side = blockDim.x;
-
+  
   for (int w = 0; w <= k+blockDim.x; w += blockDim.x){
-      sum = 0.0;
-      A_s[ii*bl_side + jj] = A[i*k+jj+w];
-      B_s[ii*bl_side + jj] = B[j+ii*n+w*n];
+      sum = 0;
+      A_s[ii*blockDim.y + jj] = A[i*k+jj+w];
+      B_s[ii*blockDim.y + jj] = B[j+ii*n+w*n];
     __syncthreads();
-      for (int h = 0; h < bl_side; h++) {
-        sum += A_s[ii*bl_side + h] * B_s[h*bl_side + jj];
+      for (int h = 0; h < blockDim.x; h++) {
+        sum += A_s[ii*blockDim.x + h] * B_s[h*blockDim.x + jj];
       }
       __syncthreads();
       C[i*n + j] += sum;
