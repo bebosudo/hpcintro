@@ -47,7 +47,7 @@ xlabel('Memory footprint [kB]'); ylabel('Performance [Gflops]');
 axis([1e0 1e7 5e-3 1.6e2]);
 lh = legend('Single thread','2D block, 2D grid','Multi GPU','OpenMP','Location','southeast');
 set(lh,'color','none');
-set(gca,'fontsize',14);
+%set(gca,'fontsize',12);
 set(gcf, 'Color', 'w');
 export_fig 'memVsFlops.png'
 
@@ -59,7 +59,7 @@ xlabel('Memory footprint [kB]'); ylabel('Speedup (CPU/GPU)');
 axis([1e0 1e7 0 30]);
 lh = legend('Single thread','2D block, 2D grid','Multi GPU','Reference','Location','northwest');
 set(lh,'color','none');
-set(gca,'fontsize',14);
+%set(gca,'fontsize',12);
 set(gcf, 'Color', 'w');
 export_fig 'memVsSpeedup.png'
 
@@ -70,6 +70,6 @@ semilogx(A7(:,4),A7(:,7),'-o',A8(:,4),A8(:,7),'-o',A9(:,4),A9(:,7),'-o','LineWid
 xlabel('Memory footprint [kB]'); ylabel('Bandwidth [GB/s]');
 axis([1e0 1e7 0 700]);
 legend('Single thread','2D block, 2D grid','Multi GPU','Location','northwest');
-set(gca,'fontsize',14);
+%set(gca,'fontsize',12);
 set(gcf, 'Color', 'w');
 export_fig 'memVsBandwidth.png'
