@@ -1,4 +1,5 @@
-#include <stdio.h>
+// #include <stdio.h>
+#include <helper_cuda.h>
 
 // Write a first sequential implementation (matmult gpu1()) of matrix multiplication on the
 // GPU that uses only a single thread. It should work for all matrix sizes. Hints:
@@ -89,7 +90,7 @@ extern "C" {
         // dynamically "pass" the shared memory to the kernel function.
         // Otherwise we should place some constants in the kernel function.
         m5<<<blockDim, gridDim, (blockDim.x*blockDim.y * 2 * sizeof(double))>>>(m, n, k, d_A, d_B, d_C);
-        cudaDeviceSynchronize();
+        checkCudaErrors(cudaDeviceSynchronize());
 
         cudaMemcpy(C, d_C, m*n * sizeof(double), cudaMemcpyDeviceToHost);
 

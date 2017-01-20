@@ -1,0 +1,4 @@
+gpu4   6144.000  15684.222 # matmult_gpu4
+gpu4  24576.000  18534.680 # matmult_gpu4
+gpu4  98304.000  19678.035 # matmult_gpu4
+gpu4 393216.000  17745.001 # matmult_gpu4

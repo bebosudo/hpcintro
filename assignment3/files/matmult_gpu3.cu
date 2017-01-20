@@ -88,7 +88,7 @@ extern "C" {
         cudaDeviceSynchronize();
         double elapsed1 = omp_get_wtime() - time;
 
-        printf("Kernel: %lf s\n",elapsed1);
+        // printf("Kernel: %lf s\n",elapsed1);
 
         cudaMemcpy(C, d_C, m*n * sizeof(double), cudaMemcpyDeviceToHost);
 

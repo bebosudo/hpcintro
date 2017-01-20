@@ -1,0 +1,4 @@
+gpu2   6144.000  15566.890 # matmult_gpu2
+gpu2  24576.000  17911.519 # matmult_gpu2
+gpu2  98304.000  18770.521 # matmult_gpu2
+gpu2 393216.000  18992.929 # matmult_gpu2

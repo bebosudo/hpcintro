@@ -13,14 +13,14 @@
 ### -- set the email address --
 # please uncomment the following line and put in your e-mail address,
 # if you want to receive e-mail notifications on a non-default address
-##BSUB -u your_email_address
+#BSUB -u your_email_address
 ### -- send notification at start --
 ##BSUB -B
 ### -- send notification at completion--
 #BSUB -N
 ### -- Specify the output and error file. %J is the job-id --
 ### -- -o and -e mean append, -oo and -eo mean overwrite --
-#BSUB -o gpu-%J.out
+#BSUB -o gpu-TYPE-%J.out
 #BSUB -e gpu_%J.err
 
 # -- end of LSF options --
@@ -36,12 +36,17 @@ module load cuda/8.0
 #
 
 declare -A size_its
-size_its=( [512]=5000 [1024]=1000 [2048]=100 [4096]=10 [8192]=1 [10240]=1 )
+size_its=( [512]=1 [1024]=1 [2048]=1 [4096]=1 [8192]=1 [10240]=1 )
 
-for method in lib gpu1 gpu2 gpu3 gpu4 gpulib #gpu5 # gpu5 not working yet.
+
+# change TYPE also in the output file accordingly!!!
+# gpu1 (the 1-thread sequential version) takes a lot of time (and usually is 
+# killed by the walltime), so it should be sent separately.
+for method in TYPE # gpu1 gpu2 gpu3 gpu4 gpulib # 'gpu5' not working yet. The 'lib' version has to be sent on the CPU cluster nodes, with the other submitter, not on this GPU cluster.
 do
-    for size in 512 1024 2048 4096 8192 10240
+    for size in 512 1024 2048 4096 #8192 #10240
     do
-        MFLOPS_MAX_IT=${size_its[${size}]} MATMULT_COMPARE ./matmult_f.nvcc2 $method $size $size $size
+        printf "${method} "
+        MFLOPS_MAX_IT=${size_its[${size}]} MATMULT_COMPARE=0 ./matmult_f.nvcc2 $method $size $size $size
     done
 done
