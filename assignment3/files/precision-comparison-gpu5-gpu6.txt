@@ -1,0 +1,12 @@
+gpu5    384.000   6615.621 0 # matmult_gpu5
+gpu5   1536.000  19913.609 0 # matmult_gpu5
+gpu5   6144.000  48210.391 0 # matmult_gpu5
+gpu5  24576.000  80132.977 0 # matmult_gpu5
+gpu5  98304.000 100682.567 300 # matmult_gpu5
+gpu5 393216.000 112420.915 18816 # matmult_gpu5
+gpu6    384.000   5857.966 0 # matmult_gpu6
+gpu6   1536.000  13876.936 0 # matmult_gpu6
+gpu6   6144.000  25665.499 0 # matmult_gpu6
+gpu6  24576.000  32939.897 0 # matmult_gpu6
+gpu6  98304.000  36059.890 300 # matmult_gpu6
+gpu6 393216.000  37488.766 18816 # matmult_gpu6
