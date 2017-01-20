@@ -19,8 +19,13 @@ __global__ void m6(int m, int n, int k, double *A, double *B, double *C) {
   double sum;
   int i = blockIdx.x*blockDim.x+threadIdx.x;
   int j = blockIdx.y*blockDim.y+threadIdx.y;
-  __shared__ double A_s[16*16];
-  __shared__ double B_s[16*16];
+
+  extern __shared__ double two_blocks[];
+  __shared__ double* A_s;
+  A_s = &two_blocks[0];
+  __shared__ double* B_s;
+  B_s = &two_blocks[blockDim.x*blockDim.y];
+
   int ii = threadIdx.x;
   int jj = threadIdx.y;
   for (int w = 0; w <= k+blockDim.x; w += blockDim.x){
@@ -52,9 +57,16 @@ extern "C" {
 
         // Initialize the output matrix with zeroes.
         cudaMemset(d_C, 0, m*n * sizeof(double));
-        dim3 BlockDim(16,16);
-        dim3 NumBlocks((m-1)/16+1,(n-1)/16+1);
-        m6<<<NumBlocks,BlockDim>>>(m, n, k, d_A, d_B, d_C);
+
+        int bs = 16;
+        dim3 blockDim(bs, bs);
+        dim3 gridDim( (m-1)/blockDim.x+1, (n-1)/blockDim.y+1 );
+
+
+        // https://devblogs.nvidia.com/parallelforall/using-shared-memory-cuda-cc/
+        // dynamically "pass" the shared memory to the kernel function.
+        // Otherwise we should place some constants in the kernel function.
+        m6<<<gridDim, blockDim, (blockDim.x*blockDim.y * 2 * sizeof(double))>>>(m, n, k, d_A, d_B, d_C);
         checkCudaErrors(cudaDeviceSynchronize());
 
         cudaMemcpy(C, d_C, m*n * sizeof(double), cudaMemcpyDeviceToHost);
