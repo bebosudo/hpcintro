@@ -16,7 +16,7 @@
 //    ---------            ---------           ---------
 #include <helper_cuda.h>
 __global__ void m6(int m, int n, int k, double *A, double *B, double *C) {
-
+  double sum;
   int i = blockIdx.x*blockDim.x+threadIdx.x;
   int j = blockIdx.y*blockDim.y+threadIdx.y;
   __shared__ double A_s[16*16];
@@ -25,11 +25,16 @@ __global__ void m6(int m, int n, int k, double *A, double *B, double *C) {
   int jj = threadIdx.y;
   if (i < m && j < n){
     for (int w = 0; w < k; w += blockDim.x){
+      sum = 0;
       A_s[threadIdx.x*blockDim.y + threadIdx.y] = A[blockIdx.x*blockDim.x*k+threadIdx.x*k+threadIdx.y+w];
-      B_s[threadIdx.y*blockDim.x + threadIdx.x] = B[blockIdx.x*blockDim.y+threadIdx.y*n+threadIdx.x+w*n];
+      B_s[threadIdx.x*blockDim.y + threadIdx.y] = B[blockIdx.y*blockDim.y+threadIdx.x*n+threadIdx.y+w*n];
+
+      __syncthreads();
       for (int h = 0; h < blockDim.x; h++) {
-        C[i*n + j] += A_s[ii*blockDim.x + h] * B_s[h*blockDim.x + jj];
+        sum += A_s[ii*blockDim.x + h] * B_s[h*blockDim.x + jj];
       }
+      __syncthreads();
+      C[i*n + j] += sum;
     }
   }
 }

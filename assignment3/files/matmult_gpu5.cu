@@ -46,7 +46,7 @@ __global__ void m5(int m, int n, int k, double *A, double *B, double *C) {
         A_s[threadIdx.y*bl_side + threadIdx.x] = A[topleft_row_A_curr_block + threadIdx.y*k + threadIdx.x];
         // We just need each thread to load a single cell from the huge matrix
         // A & B, no matter if they don't load the same they are going to work on.
-        B_s[threadIdx.y*bl_side + threadIdx.x] = B[topleft_col_B_curr_block + threadIdx.y*k + threadIdx.x];
+        B_s[threadIdx.y*bl_side + threadIdx.x] = B[topleft_col_B_curr_block + threadIdx.y*n + threadIdx.x];
 
         __syncthreads();
 
@@ -89,8 +89,8 @@ extern "C" {
         // https://devblogs.nvidia.com/parallelforall/using-shared-memory-cuda-cc/
         // dynamically "pass" the shared memory to the kernel function.
         // Otherwise we should place some constants in the kernel function.
-        m5<<<blockDim, gridDim, (blockDim.x*blockDim.y * 2 * sizeof(double))>>>(m, n, k, d_A, d_B, d_C);
-        checkCudaErrors(cudaDeviceSynchronize());
+        m5<<<gridDim, blockDim, (blockDim.x*blockDim.y * 2 * sizeof(double))>>>(m, n, k, d_A, d_B, d_C);
+        cudaDeviceSynchronize();
 
         cudaMemcpy(C, d_C, m*n * sizeof(double), cudaMemcpyDeviceToHost);
 
