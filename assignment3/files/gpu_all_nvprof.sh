@@ -9,7 +9,7 @@
 ### -- Select the resources: 2 gpus in exclusive process mode --
 #BSUB -R "rusage[ngpus_excl_p=2]"
 ### -- set walltime limit: hh:mm --
-#BSUB -W 00:20
+#BSUB -W 00:30
 ### -- set the email address --
 # please uncomment the following line and put in your e-mail address,
 # if you want to receive e-mail notifications on a non-default address
@@ -20,8 +20,8 @@
 #BSUB -N
 ### -- Specify the output and error file. %J is the job-id --
 ### -- -o and -e mean append, -oo and -eo mean overwrite --
-#BSUB -o gpu6.out
-#BSUB -e gpu6.err
+#BSUB -o gpu-ALL-profiling.out
+#BSUB -e gpu-ALL-profiling.err
 
 # -- end of LSF options --
 
@@ -50,9 +50,9 @@ size_its=( [512]=100 [1024]=10 [2048]=1 [4096]=1 [8192]=1 [10240]=1 )
 
 # The 'lib' version has to be sent on the CPU cluster nodes, with the other submitter, not on this GPU cluster.
 # for method in gpu2 gpu3 gpu4 gpulib
-for method in gpu6
+for method in gpu1 gpu2 gpu3 gpu4 gpu5 gpu6 gpulib
 do
-    for size in 512 1024 2048 4096 8192 #10240
+    for size in 1600 #10240
     do
         printf "${method} "
         MFLOPS_MAX_IT=${size_its[${size}]} MATMULT_COMPARE=0 ./matmult_f.nvcc2 $method $size $size $size
