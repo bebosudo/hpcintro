@@ -1,0 +1,5 @@
+gpu5   6144.000  37238.430 # matmult_gpu5
+gpu5  24576.000  56498.603 # matmult_gpu5
+gpu5  98304.000  66073.116 # matmult_gpu5
+gpu5 393216.000  71885.230 # matmult_gpu5
+gpu5 1572864.000  74325.365 # matmult_gpu5
