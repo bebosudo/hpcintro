@@ -28,7 +28,7 @@ __global__ void m6(int m, int n, int k, double *A, double *B, double *C) {
   int ii = threadIdx.x;
   int jj = threadIdx.y;
 
-  const int bl_side = blockDim.x
+  const int bl_side = blockDim.x;
 
   for (int w = 0; w <= k+blockDim.x; w += blockDim.x){
       sum = 0.0;
