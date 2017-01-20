@@ -33,7 +33,7 @@ Device 0: "Tesla K40c"
   Alignment requirement for Surfaces:            Yes
   Device has ECC support:                        Enabled
   Device supports Unified Addressing (UVA):      Yes
-  Device PCI Domain ID / Bus ID / location ID:   0 / 3 / 0
+  Device PCI Domain ID / Bus ID / location ID:   0 / 131 / 0
   Compute Mode:
      < Exclusive Process (many threads in one process is able to use ::cudaSetDevice() with this device) >
 
@@ -66,11 +66,11 @@ Device 1: "Tesla K40c"
   Alignment requirement for Surfaces:            Yes
   Device has ECC support:                        Enabled
   Device supports Unified Addressing (UVA):      Yes
-  Device PCI Domain ID / Bus ID / location ID:   0 / 131 / 0
+  Device PCI Domain ID / Bus ID / location ID:   0 / 132 / 0
   Compute Mode:
      < Exclusive Process (many threads in one process is able to use ::cudaSetDevice() with this device) >
-> Peer access from Tesla K40c (GPU0) -> Tesla K40c (GPU1) : No
-> Peer access from Tesla K40c (GPU1) -> Tesla K40c (GPU0) : No
+> Peer access from Tesla K40c (GPU0) -> Tesla K40c (GPU1) : Yes
+> Peer access from Tesla K40c (GPU1) -> Tesla K40c (GPU0) : Yes
 
 deviceQuery, CUDA Driver = CUDART, CUDA Driver Version = 8.0, CUDA Runtime Version = 8.0, NumDevs = 2, Device0 = Tesla K40c, Device1 = Tesla K40c
 Result = PASS
