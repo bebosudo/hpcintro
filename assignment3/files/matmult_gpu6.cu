@@ -67,7 +67,7 @@ extern "C" {
         // dynamically "pass" the shared memory to the kernel function.
         // Otherwise we should place some constants in the kernel function.
         m6<<<gridDim, blockDim, (blockDim.x*blockDim.y * 2 * sizeof(double))>>>(m, n, k, d_A, d_B, d_C);
-        checkCudaErrors(cudaDeviceSynchronize());
+        cudaDeviceSynchronize();
 
         cudaMemcpy(C, d_C, m*n * sizeof(double), cudaMemcpyDeviceToHost);
 
