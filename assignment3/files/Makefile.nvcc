@@ -1,3 +1,6 @@
+# load the needed modules with:
+# module load gcc/5.3.0 cuda/8.0
+
 TARGET	= libmatmult.so
 LIBSRCS	=
 LIBOBJS	= matmult_lib.o  matmult_gpu1.o matmult_gpu2.o \
