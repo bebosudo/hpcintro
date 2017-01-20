@@ -58,7 +58,7 @@ extern "C" {
         // Initialize the output matrix with zeroes.
         cudaMemset(d_C, 0, m*n * sizeof(double));
 
-        int bs = 16;
+        int bs = 32;
         dim3 blockDim(bs, bs);
         dim3 gridDim( (m-1)/blockDim.x+1, (n-1)/blockDim.y+1 );
 
