@@ -1,0 +1,53 @@
+cuda/8.0 is already loaded.
+==20933== NVPROF is profiling process 20933, command: ./matmult_f.nvcc2 gpu2 1600 1600 1600
+==20933== Profiling application: ./matmult_f.nvcc2 gpu2 1600 1600 1600
+==20933== Profiling result:
+==20933== Metric result:
+Invocations                               Metric Name                            Metric Description         Min         Max         Avg
+Device "Tesla K40c (0)"
+    Kernel: m2(int, int, int, double*, double*, double*)
+          2                             flop_count_dp   Floating Point Operations(Double Precision)  8192000000  8192000000  8192000000
+==20947== NVPROF is profiling process 20947, command: ./matmult_f.nvcc2 gpu3 1600 1600 1600
+==20947== Profiling application: ./matmult_f.nvcc2 gpu3 1600 1600 1600
+==20947== Profiling result:
+==20947== Metric result:
+Invocations                               Metric Name                            Metric Description         Min         Max         Avg
+Device "Tesla K40c (0)"
+    Kernel: m3_2(int, int, int, double*, double*, double*)
+          2                             flop_count_dp   Floating Point Operations(Double Precision)  8192000000  8192000000  8192000000
+==20970== NVPROF is profiling process 20970, command: ./matmult_f.nvcc2 gpu4 1600 1600 1600
+==20970== Profiling application: ./matmult_f.nvcc2 gpu4 1600 1600 1600
+==20970== Profiling result:
+==20970== Metric result:
+Invocations                               Metric Name                            Metric Description         Min         Max         Avg
+Device "Tesla K40c (0)"
+    Kernel: m4_1(int, int, int, double*, double*, double*)
+          2                             flop_count_dp   Floating Point Operations(Double Precision)  8192000000  8192000000  8192000000
+==20981== NVPROF is profiling process 20981, command: ./matmult_f.nvcc2 gpu5 1600 1600 1600
+==20981== Profiling application: ./matmult_f.nvcc2 gpu5 1600 1600 1600
+==20981== Profiling result:
+==20981== Metric result:
+Invocations                               Metric Name                            Metric Description         Min         Max         Avg
+Device "Tesla K40c (0)"
+    Kernel: m5(int, int, int, double*, double*, double*)
+          2                             flop_count_dp   Floating Point Operations(Double Precision)  8448000000  8448000000  8448000000
+==21003== NVPROF is profiling process 21003, command: ./matmult_f.nvcc2 gpu6 1600 1600 1600
+==21003== Profiling application: ./matmult_f.nvcc2 gpu6 1600 1600 1600
+==21003== Profiling result:
+==21003== Metric result:
+Invocations                               Metric Name                            Metric Description         Min         Max         Avg
+Device "Tesla K40c (0)"
+    Kernel: m6(int, int, int, double*, double*, double*)
+          2                             flop_count_dp   Floating Point Operations(Double Precision)  8320000000  8320000000  8320000000
+==21014== NVPROF is profiling process 21014, command: ./matmult_f.nvcc2 gpulib 1600 1600 1600
+==21014== Profiling application: ./matmult_f.nvcc2 gpulib 1600 1600 1600
+==21014== Profiling result:
+==21014== Metric result:
+Invocations                               Metric Name                            Metric Description         Min         Max         Avg
+Device "Tesla K40c (0)"
+    Kernel: dgemm_sm35_ldg_nn_128x8x64x16x16
+          2                             flop_count_dp   Floating Point Operations(Double Precision)   314867712   314867712   314867712
+    Kernel: dgemm_sm35_ldg_nn_64x8x128x8x32
+          2                             flop_count_dp   Floating Point Operations(Double Precision)   341106688   341106688   341106688
+    Kernel: dgemm_sm_heavy_ldg_nn
+          2                             flop_count_dp   Floating Point Operations(Double Precision)  7552106496  7552106496  7552106496

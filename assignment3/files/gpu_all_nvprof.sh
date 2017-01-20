@@ -50,7 +50,7 @@ size_its=( [512]=100 [1024]=10 [2048]=1 [4096]=1 [8192]=1 [10240]=1 )
 
 # The 'lib' version has to be sent on the CPU cluster nodes, with the other submitter, not on this GPU cluster.
 # for method in gpu2 gpu3 gpu4 gpulib
-for method in gpu1 gpu2 gpu3 gpu4 gpu5 gpu6 gpulib
+for method in gpu2 gpu3 gpu4 gpu5 gpu6 gpulib #gpu1 takes too much
 do
     for size in 1600 #10240
     do

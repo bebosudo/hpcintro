@@ -1,0 +1,6 @@
+gpu2  60000.000   3963.932 # matmult_gpu2
+gpu3  60000.000   4029.668 # matmult_gpu3
+gpu4  60000.000   5076.702 # matmult_gpu4
+gpu5  60000.000   7204.488 # matmult_gpu5
+gpu6  60000.000   6012.106 # matmult_gpu6
+gpulib  60000.000   3836.037 # matmult_gpulib
