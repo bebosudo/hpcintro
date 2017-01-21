@@ -1,0 +1,33 @@
+# load the needed modules with:
+# module load gcc/5.3.0 cuda/8.0
+
+TARGET	= libmatmult.so
+LIBSRCS	=
+LIBOBJS	= matmult_lib.o  matmult_gpu1.o matmult_gpu2.o \
+		  matmult_gpu3.o matmult_gpu4.o matmult_gpu5.o \
+		  matmult_gpulib.o matmult_gpu6.o
+OPT	= -g
+PIC = -fpic
+XPIC  = -Xcompiler -fpic
+XOPTS = -Xptxas=-v
+ARCH  = -arch=sm_30
+OMP   = -fopenmp
+
+CXX	= nvcc
+CXXFLAGS= --compiler-options "$(OPT) $(PIC) $(OMP)" $(ARCH) $(XOPTS) $(XPIC)
+
+CUDA_PATH ?= /appl/cuda/8.0
+INCLUDES = -I$(CUDA_PATH)/include -I$(CUDA_PATH)/samples/common/inc
+
+SOFLAGS = -shared
+XLIBS	= -lcublas
+
+$(TARGET): $(LIBOBJS)
+	$(CXX) -o $@ $(CXXFLAGS) $(SOFLAGS) $(INCLUDES) $^ $(XLIBS)
+
+.SUFFIXES: .cu
+.cu.o:
+	$(CXX) -o $*.o -c $*.cu $(CXXFLAGS) $(SOFLAGS) $(INCLUDES)
+
+clean:
+	@/bin/rm -f $(TARGET) $(LIBOBJS)
