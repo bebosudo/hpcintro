@@ -20,3 +20,6 @@ A(:,3) = A(:,3)/1000;
 semilogx(A(1:5,2), A(1:5,3));
 hold on
 semilogx(A(8:12,2),A(8:12,3));
+
+xlabel('Memory footprint [kB]'); ylabel('Performance [Gflops]');
+% legend(,'Location','southwest');
