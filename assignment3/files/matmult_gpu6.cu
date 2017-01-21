@@ -16,8 +16,8 @@
 //    ---------            ---------           ---------
 __global__ void m6(int m, int n, int k, double *A, double *B, double *C) {
   double sum;
-  int i = blockIdx.x*blockDim.x+threadIdx.x;
-  int j = blockIdx.y*blockDim.y+threadIdx.y;
+  int i = blockIdx.y*blockDim.y+threadIdx.y;
+  int j = blockIdx.x*blockDim.x+threadIdx.x;
 
   extern __shared__ double two_blocks[];
   __shared__ double* A_s;
@@ -25,17 +25,17 @@ __global__ void m6(int m, int n, int k, double *A, double *B, double *C) {
   __shared__ double* B_s;
   B_s = &two_blocks[blockDim.x*blockDim.y];
 
-  int ii = threadIdx.x;
-  int jj = threadIdx.y;
+  int ii = threadIdx.y;
+  int jj = threadIdx.x;
   const int blockdim = blockDim.x;
 
   for (int w = 0; w < k; w += blockdim){
       sum = 0.0;
-      A_s[jj*blockdim + ii] = A[j*k+ii+w];
-      B_s[jj*blockdim + ii] = B[i+jj*n+w*n];
+      A_s[ii*blockdim + jj] = A[i*k+jj+w];
+      B_s[ii*blockdim + jj] = B[j+ii*n+w*n];
     __syncthreads();
       for (int h = 0; h < blockdim; h++) {
-        sum += A_s[jj*blockdim + h] * B_s[h*blockdim + ii];
+        sum += A_s[ii*blockdim + h] * B_s[h*blockdim + jj];
       }
       __syncthreads();
       C[i*n + j] += sum;
@@ -58,7 +58,7 @@ extern "C" {
         // Initialize the output matrix with zeroes.
         cudaMemset(d_C, 0, m*n * sizeof(double));
 
-        int bs = 32;
+        int bs = 16;
         dim3 blockDim(bs, bs);
         dim3 gridDim( (m-1)/blockDim.x+1, (n-1)/blockDim.y+1 );
 
