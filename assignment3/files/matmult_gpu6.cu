@@ -31,11 +31,11 @@ __global__ void m6(int m, int n, int k, double *A, double *B, double *C) {
 
   for (int w = 0; w < k; w += blockdim){
       sum = 0.0;
-      A_s[ii*blockdim + jj] = A[i*k+jj+w];
-      B_s[ii*blockdim + jj] = B[j+ii*n+w*n];
+      A_s[jj*blockdim + ii] = A[j*k+ii+w];
+      B_s[jj*blockdim + ii] = B[i+jj*n+w*n];
     __syncthreads();
       for (int h = 0; h < blockdim; h++) {
-        sum += A_s[ii*blockdim + h] * B_s[h*blockdim + jj];
+        sum += A_s[jj*blockdim + h] * B_s[h*blockdim + ii];
       }
       __syncthreads();
       C[i*n + j] += sum;

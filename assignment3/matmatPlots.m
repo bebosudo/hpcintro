@@ -17,7 +17,7 @@ A(:,3) = A(:,3)/1000;
 
 % memory footprint vs flops
 figure;
-semilogx(A(I(:,2),2),A(I(:,2),3),'-o',A(I(:,3),2),A(I(:,3),3),'-o',A(I(:,4),2),A(I(:,4),3),'-o',A(I(:,5),2),A(I(:,5),3),'-o',A(I(:,6),2),A(I(:,6),3),'-o');
+semilogx(A(I(:,2),2),A(I(:,2),3),'-o',A(I(:,3),2),A(I(:,3),3),'-o',A(I(:,4),2),A(I(:,4),3),'-o',A(I(:,5),2),A(I(:,5),3),'-o',A(I(:,7),2),A(I(:,7),3),'-o',A(I(:,8),2),A(I(:,8),3),'-o');
 xlabel('Memory footprint [kB]'); ylabel('Performance [Gflops]');
-legend(C{1}, C{3}, C{4}, C{5}, C{6},'Location','southeast');
+legend(C{1}, C{3}, C{4}, C{5},C{7},C{8},'Location','northwest');
 print('MatrixMemVsFlops.png','-dpng')
